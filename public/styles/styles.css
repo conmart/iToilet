@@ -52,3 +52,7 @@ a {
   height: 100px;
   width: auto;
 }
+
+.radio-buttons {
+  padding: 0 25px;
+}

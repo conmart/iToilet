@@ -10,7 +10,7 @@ toiletData.push({
     price: 0,
     rating: 5,
     public: true,
-    availabilty: "Medium",
+    availability: "Medium",
     amount: 1,
     pictures: ["http://www.freeiconspng.com/uploads/bathroom-restroom-toilet-icon-20.png", "http://i.imgur.com/aExxCQv.png?1"],
 });
@@ -23,7 +23,7 @@ toiletData.push({
     price: 0,
     rating: 1,
     public: true,
-    availabilty: "Medium",
+    availability: "Medium",
     amount: 1,
     pictures: ["http://www.freeiconspng.com/uploads/bathroom-restroom-toilet-icon-20.png", "http://i.imgur.com/aExxCQv.png?1"],
 })
