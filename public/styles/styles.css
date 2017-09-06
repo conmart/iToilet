@@ -1,3 +1,36 @@
-body {
-  background-color: blue;
+
+h1 {
+  color: white;
+}
+
+h2 {
+  font-family: "Encode Sans Semi Condensed", sans-serif;
+  color: white;
+  padding-bottom: 30px;
+}
+
+.top-page {
+  background-color: black;
+  margin: 0;
+  width: 100%;
+}
+
+a {
+  margin: 15px;
+}
+
+.add-toilet {
+  background-color: lightgray;
+}
+
+.search-filters {
+  background-color: yellow;
+  height: 100px;
+  width: 100%;
+}
+
+#map{
+  background-color: red;
+  width:100%;
+  height:200px;
 }
