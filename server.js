@@ -23,7 +23,7 @@ app.get('/', function homepage(req, res) {
 });
 
 
-
+app.get('/api/toilets', controllers.toilets.index);
 
 
 
