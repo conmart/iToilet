@@ -2,15 +2,16 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const ToiletSchema = new Schema({
-  Address: String,
-  Lat: Number,
-  Long: Number,
-  Price: Number,
-  Rating: Number,
-  Public: Boolean,
-  Availabilty: String,
-  Amount: Number,
-  Pictures: [String],
+  name: String,
+  address: String,
+  lat: Number,
+  long: Number,
+  price: Number,
+  rating: Number,
+  public: Boolean,
+  availabilty: String,
+  amount: Number,
+  pictures: [String],
   // Reviews: [ReviewSchema]
 })
 
