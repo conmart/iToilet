@@ -9,7 +9,7 @@ const ToiletSchema = new Schema({
   price: Number,
   rating: Number,
   public: Boolean,
-  availabilty: String,
+  availability: String,
   amount: Number,
   pictures: [String],
   // Reviews: [ReviewSchema]

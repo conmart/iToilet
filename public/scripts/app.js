@@ -9,8 +9,50 @@ $(document).ready(function () {
     url: '/api/toilets',
     success: renderToiletList,
   });
+
+  $('.new-toilet-form').on('submit', function(event) {
+      event.preventDefault();
+      // console.log($('.add-name').val());
+      // console.log($('.add-address').val());
+      // console.log($('.add-name').val());
+
+      //this returns the availability value
+      console.log($("input[name=group1]:checked").val())
+
+      //this returns the value of the rating
+      console.log($('.add-rating')[1].value);
+
+      //this returns false if public, true if private
+      console.log($('#switch-id').prop('checked'));
+
+      console.log($('.add-picture').val());
+
+      $.ajax({
+        method: "POST",
+        url: "api/toilets",
+        data: {
+          name: $('.add-name').val(),
+          address: $('.add-address').val(),
+          price: $('.add-price').val(),
+          rating: $('.add-rating')[1].value,
+          public: $('#switch-id').prop('checked'),
+          availability: $("input[name=group1]:checked").val(),
+          amount: $('.add-amount').val(),
+          pictures: $('.add-picture').val(),
+        },
+        success: renderToilet,
+      })
+
+  })
+
+
+
+
+
+
   // end of document ready
 })
+
 
 
 function initMap() {
@@ -80,4 +122,5 @@ function renderToilet (toilet) {
                 </div>
               </div>`
     $('.modal-bodies').append(modalBody);
+    $('.modal').modal();
 }

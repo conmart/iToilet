@@ -24,6 +24,7 @@ app.get('/', function homepage(req, res) {
 
 
 app.get('/api/toilets', controllers.toilets.index);
+app.post('/api/toilets', controllers.toilets.create);
 
 
 

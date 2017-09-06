@@ -44,9 +44,9 @@
         <a class="waves-effect waves-light btn modal-trigger center-align" href="#modal1">Add New Toilet</a>
 
         <!-- Modal Structure -->
+        <form class="col s12 new-toilet-form">
         <div id="modal1" class="modal">
           <div class="modal-content row">
-            <form col s12>
               <div class="row">
                 <div class="input-field col s6">
                   <input id="name" type="text" class="add-name">
@@ -56,35 +56,78 @@
                   <input id="address" type="text" class="add-address">
                   <label for="address">Address</label>
                 </div>
+              </div>
+
               <div class="row">
-              <div class="input-field col s6">
-                <select>
-                  <!--<option value="" disabled selected>Rate the toilet</option>-->
-                  <option value="1">&#9733;</option>
-                  <option value="2">&#9733;&#9733;</option>
-                  <option value="3">&#9733;&#9733;&#9733;</option>
-                  <option value="4">&#9733;&#9733;&#9733;&#9733;</option>
-                  <option value="5">&#9733;&#9733;&#9733;&#9733;&#9733;</option>
-                </select>
-                <label>Rate the toilet</label>
+                <div class="input-field col s6">
+                  <select class="add-rating">
+                    <!--<option value="" disabled selected>Rate the toilet</option>-->
+                    <option value="1">&#9733;</option>
+                    <option value="2">&#9733;&#9733;</option>
+                    <option value="3">&#9733;&#9733;&#9733;</option>
+                    <option value="4">&#9733;&#9733;&#9733;&#9733;</option>
+                    <option value="5">&#9733;&#9733;&#9733;&#9733;&#9733;</option>
+                  </select>
+                  <label>Rate the toilet</label>
+                </div>
+                <div class="input-field col s6">
+                  <input id="price" type="number" class="add-price">
+                  <label for="price">Price</label>
+                </div>
               </div>
-              <div class="input-field col s6">
-                <input id="price" type="number" class="add-price">
-                <label for="price">Price</label>
+
+                <div class="row">
+                  <div class="col s6">
+                    <div class="switch">
+                      <label>
+                        Private
+                        <input id="switch-id" type="checkbox" value="Private">
+                        <span class="lever"></span>
+                        Public
+                      </label>
+                    </div>
+                  </div>
+                <div class="col s6">
+                  <!--<div class="radio-buttons">-->
+                      <input class="with-gap" name="group1" type="radio" value="low" id="test1" />
+                      <label class="radio-buttons" for="test1">Low</label>
+                      <input class="with-gap" name="group1" type="radio" value="medium" id="test2" />
+                      <label class="radio-buttons" for="test2">Medium</label>
+                      <input class="with-gap" name="group1" type="radio" value="high" id="test3"  />
+                      <label class="radio-buttons" for="test3">High</label>
+                  <!--</div>-->
+                </div>
+                </div>
+
+              <div class="row">
+                <div class="input-field col s6">
+                  <input id="amount" type="number" class="add-amount">
+                  <label for="amount">Number of Toilets</label>
+                </div>
+                <div class="col s6 input-field">
+                  <input id="picture-url" type="text" class="add-picture">
+                  <label for="picture-url">Picture URL</label>
+                </div>
+                    <!--<div class="btn">-->
+                      <!--<span>File</span>-->
+                      <!--<input class="picture-upload" type="file" multiple>-->
+                    <!--</div>-->
+                    <!--<div class="file-path-wrapper">-->
+                      <!--<input class="file-path validate" type="text" placeholder="Upload one or more files">-->
+                    <!--</div>-->
+                  <!--</div>-->
+
               </div>
-              </div>
-              <input type="text" class="add-price" placeholder="Price">
-              <input type="text" class="availability" placeholder="Availability">
-              <input type="number" class="add-amount" placeholder="Amount of Toilets">
               <!--<input type="text" class="add-price" placeholder="name">-->
 
 
-            </form>
+
           </div>
           <div class="modal-footer">
-            <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
+            <button type="submit" class="submit-toilet modal-action modal-close waves-effect waves-green btn-flat">Add Toilet</button>
           </div>
         </div>
+        </form>
 
       </div>
 
