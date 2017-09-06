@@ -17,7 +17,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
 
     <!-- Google Maps API -->
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBHLett8djBo62dDXj0EjCimF8Rd6E8cxg"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDtDkrXzXkujBCx8mAFT393o2A5L3Fg6qY"></script>
 
 
     <script src="/scripts/app.js"></script>
@@ -57,34 +57,75 @@
       </div>
 
       <div class="search-filters">
+        <p>Search filters to go here</p>
       </div>
 
-      <!-- div containing map, and all other toilet data -->
-      <div class="container">
 
-        <!-- AIzaSyDtDkrXzXkujBCx8mAFT393o2A5L3Fg6qY -->
+
+
         <div class="row">
 
-                <div class="col s7">
-                  <div id="map">
-                    <h4>testing</h4>
+          <div class="col s7 map-display">
+            <div id="map">
+            </div>
+          </div>
+          <div class="col s5">
+
+            <div id="info">
+              <h3>Toilets in the area</h3>
+              <ul class="list-toilets">
+                <!-- Modal Trigger -->
+                <li><a class="waves-effect waves-light modal-trigger" href="#toilet1">Pier 7 Toilet</a></li>
+              </ul>
+            </div>
+
+
+
+
+
+            <!-- Modal Structure -->
+            <div id="toilet1" class="modal">
+              <div class="modal-content">
+                <div class="row">
+                  <div class="toilet-info col s5">
+                    <h4>Pier 7 Toilet</h4>
+                    <ul>
+                      <li>Rating: 5</li>
+                      <li>Address: Pier 7</li>
+                      <li>Public</li>
+                      <li>Price: Free</li>
+                      <li>Availability: Medium</li>
+                      <li>Amount of Toilets: 1</li>
+                    </ul>
                   </div>
-                </div>
-                <div class="col s5">
-
-                  <div id="info">
-                    <h3>Toilets in the area</h3>
+                  <div class="toilet-pics col s4">
+                    <img src="http://www.freeiconspng.com/uploads/bathroom-restroom-toilet-icon-20.png">
                   </div>
+              </div>
+                <ol>
+                  <li>Review 1</li>
+                  <li>Review 2</li>
+                </ol>
+              </div>
+              <div class="modal-footer">
+                <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
+              </div>
+            </div>
 
 
-                </div>
+          </div>
 
         </div>
 
 
 
 
-      </div>
+
+      <footer>
+        <div class="center-align">
+          <p>contact and footer info</p>
+        </div>
+      </footer>
 
 
 
