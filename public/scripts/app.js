@@ -1,7 +1,7 @@
 console.log("app.js connected");
 
 $(document).ready(function () {
-  $('.modal').modal();
+  $('select').material_select();
   initMap();
 
   $.ajax({
@@ -9,18 +9,6 @@ $(document).ready(function () {
     url: '/api/toilets',
     success: renderToiletList,
   });
-
-
-
-
-
-
-
-
-
-
-
-
   // end of document ready
 })
 
@@ -36,12 +24,12 @@ function renderToiletList (list) {
   list.forEach(function (toilet) {
     renderToilet(toilet);
   })
-
+  $('.modal').modal();
 }
 
 function renderToilet (toilet) {
   let modalTrigger = `
-    <li><a class="waves-effect waves-light modal-trigger" href="#testModal">${toilet.name} Toilet</a></li>
+    <li><a class="waves-effect waves-light modal-trigger" href="#${toilet._id}">${toilet.name} Toilet</a></li>
   `;
   $('.list-toilets').append(modalTrigger);
 
@@ -55,20 +43,27 @@ function renderToilet (toilet) {
   let allImagesHTML = images.join("");
   console.log(allImagesHTML);
 
+  let public = "Public";
+  let price = "Free";
+  if (toilet.public !== true) {
+    public = "Private";
+    price = toilet.price;
+  }
+
 
   let modalBody = `
-              <div id="testModal" class="modal toilet">
+              <div id="${toilet._id}" class="modal toilet">
                 <div class="modal-content">
                   <div class="row">
                     <div class="toilet-info col s5">
-                      <h4>Pier 7 Toilet</h4>
+                      <h4>${toilet.name} Toilet</h4>
                       <ul>
-                        <li>Rating: 5</li>
-                        <li>Address: Pier 7</li>
-                        <li>Public</li>
-                        <li>Price: Free</li>
-                        <li>Availability: Medium</li>
-                        <li>Amount of Toilets: 1</li>
+                        <li>Rating: ${toilet.rating}</li>
+                        <li>Address: ${toilet.address}</li>
+                        <li>Public: ${public}</li>
+                        <li>Price: ${price}</li>
+                        <li>Availability: ${toilet.availabilty}</li>
+                        <li>Amount of Toilets: ${toilet.amount}</li>
                       </ul>
                     </div>
                     <div class="toilet-pics col s4">
@@ -85,6 +80,4 @@ function renderToilet (toilet) {
                 </div>
               </div>`
     $('.modal-bodies').append(modalBody);
-    $('.modal').modal();
-
 }

@@ -45,9 +45,41 @@
 
         <!-- Modal Structure -->
         <div id="modal1" class="modal">
-          <div class="modal-content">
-            <h4>Modal Header</h4>
-            <p>A bunch of text</p>
+          <div class="modal-content row">
+            <form col s12>
+              <div class="row">
+                <div class="input-field col s6">
+                  <input id="name" type="text" class="add-name">
+                  <label for="name">Name</label>
+                </div>
+                <div class="input-field col s6">
+                  <input id="address" type="text" class="add-address">
+                  <label for="address">Address</label>
+                </div>
+              <div class="row">
+              <div class="input-field col s6">
+                <select>
+                  <!--<option value="" disabled selected>Rate the toilet</option>-->
+                  <option value="1">&#9733;</option>
+                  <option value="2">&#9733;&#9733;</option>
+                  <option value="3">&#9733;&#9733;&#9733;</option>
+                  <option value="4">&#9733;&#9733;&#9733;&#9733;</option>
+                  <option value="5">&#9733;&#9733;&#9733;&#9733;&#9733;</option>
+                </select>
+                <label>Rate the toilet</label>
+              </div>
+              <div class="input-field col s6">
+                <input id="price" type="number" class="add-price">
+                <label for="price">Price</label>
+              </div>
+              </div>
+              <input type="text" class="add-price" placeholder="Price">
+              <input type="text" class="availability" placeholder="Availability">
+              <input type="number" class="add-amount" placeholder="Amount of Toilets">
+              <!--<input type="text" class="add-price" placeholder="name">-->
+
+
+            </form>
           </div>
           <div class="modal-footer">
             <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
@@ -75,7 +107,7 @@
               <h3>Toilets in the area</h3>
               <ul class="list-toilets">
                 <!-- Modal Trigger -->
-                <li><a class="waves-effect waves-light modal-trigger" href="#modal2">Pier 7 Toilet Hardcoded</a></li>
+                <!--<li><a class="waves-effect waves-light modal-trigger" href="#modal2">Pier 7 Toilet Hardcoded</a></li>-->
               </ul>
             </div>
 
@@ -83,34 +115,6 @@
 
 
             <div class="modal-bodies">
-              <!-- Modal Structure -->
-              <!-- <div id="testModal" class="modal toilet">
-                <div class="modal-content">
-                  <div class="row">
-                    <div class="toilet-info col s5">
-                      <h4>Pier 7 Toilet</h4>
-                      <ul>
-                        <li>Rating: 5</li>
-                        <li>Address: Pier 7</li>
-                        <li>Public</li>
-                        <li>Price: Free</li>
-                        <li>Availability: Medium</li>
-                        <li>Amount of Toilets: 1</li>
-                      </ul>
-                    </div>
-                    <div class="toilet-pics col s4">
-                    </div>
-                </div>
-                  <ol>
-                    <li>Review 1</li>
-                    <li>Review 2</li>
-                  </ol>
-                </div>
-                <div class="modal-footer">
-
-                </div>
-              </div> -->
-              <!-- end of modal bodies -->
             </div>
 
 
