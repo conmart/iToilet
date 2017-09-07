@@ -12,7 +12,6 @@ const ToiletSchema = new Schema({
   availability: String,
   amount: Number,
   pictures: [String],
-  // Reviews: [ReviewSchema]
 })
 
 const Toilet = mongoose.model('Toilet', ToiletSchema);

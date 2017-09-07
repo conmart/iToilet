@@ -25,7 +25,11 @@ app.get('/', function homepage(req, res) {
 app.get('/api/toilets', controllers.toilets.index);
 app.post('/api/toilets', controllers.toilets.create);
 app.put('/api/toilets/:id', controllers.toilets.update);
+
 app.delete('/api/toilets/:id', controllers.toilets.destroy);
+
+app.get('/api/reviews', controllers.reviews.index);
+
 
 
 app.listen(process.env.PORT || 3000, function () {

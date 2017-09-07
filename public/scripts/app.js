@@ -1,5 +1,6 @@
 $(document).ready(function () {
   $('select').material_select();
+  $('.modal').modal();
   initMap();
 
   //grabs everything in the database and displays the content next to the map
@@ -170,15 +171,15 @@ function renderToilet (toilet) {
                     <li>Review 1</li>
                     <li>Review 2</li>
                   </ol>
-              
+
                 <div class="modal-footer">
                   <a class="waves-effect waves-light btn edit-button">Edit</a>
                   <a class="waves-effect waves-light btn delete-button">Delete</a>
                 </div>
                 </div>
-                
+
                 <!--Beginning of edit form-->
-                
+
                 <form class="col s12 new-toilet-form edit-form">
               <div class="row">
                 <div class="input-field col s6">
@@ -200,14 +201,14 @@ function renderToilet (toilet) {
                     <option value="4">&#9733;&#9733;&#9733;&#9733;</option>
                     <option value="5">&#9733;&#9733;&#9733;&#9733;&#9733;</option>
                   </select>
-                 
+
                 </div>
                 <div class="input-field col s6">
                   <input class="edit-price" type="number" value="${toilet.price}"}>
                   <label class="active" for="edit-price">Price</label>
                 </div>
               </div>
-              
+
               <div class="row">
                   <div class="col s6">
                     <div class="switch">
@@ -230,7 +231,7 @@ function renderToilet (toilet) {
                       <label class="radio-buttons" for="edit-avail-3-${toilet._id}">High</label>
                 </div>
                 </div>
-                
+
                 <div class="row">
                 <div class="input-field col s6">
                   <input class="edit-amount" type="number" value="${toilet.amount}">
