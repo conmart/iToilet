@@ -28,8 +28,20 @@ function create(req, res) {
   })
 }
 
+function update(req,res) {
+  db.Toilet.findByIdAndUpdate(req.body.id, {new:true}, (err, toilet) => {
+    toilet.name = req.body.name;
+    toilet.address = req.body.address;
+    toilet.price = req.body.price;
+        // toilet.rating = req.body.rating,
+    toilet.amount = req.body.amount;
+    toilet.save();
+  })
+}
+
 
 module.exports = {
   index: index,
-  create: create
+  create: create,
+  update: update,
 }

@@ -56,3 +56,11 @@ a {
 .radio-buttons {
   padding: 0 25px;
 }
+
+.edit-form {
+  display: none;
+}
+
+.edit-radio-form {
+  margin-top: -21px;
+}
