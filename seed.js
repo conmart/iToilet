@@ -2,6 +2,27 @@ const db = require('./models');
 
 let toiletData = [];
 
+let reviewList = [
+  {
+    rating: 5,
+    description: "Best toilet ever!",
+    toiletName: "Pier 8",
+  },
+  {
+    rating: 3,
+    description: "It was okay I guess.",
+    toiletName: "Pier 7",
+  },
+  {
+    rating: 4,
+    description: "decent toilet.",
+    toiletName: "Pier 7",
+  }
+];
+
+
+
+
 toiletData.push({
     name: "Pier 7",
     address: "7 The Embarcadero, San Francisco, CA 94105",
@@ -30,35 +51,46 @@ toiletData.push({
 
 
 
-let reviewList = [
-  {
-    rating: 5,
-    description: "Best toilet ever!",
-  },
-  {
-    rating: 3,
-    description: "It was okay I guess.",
-  }
-]
+
 
 db.Toilet.remove({}, function(err, toilets){
-
+  console.log('removed all toilets');
   db.Toilet.create(toiletData, function(err, toilets){
     if (err) { return console.log('ERROR', err); }
     console.log("all toilets:", toilets);
     console.log("created", toilets.length, "toilets");
-    process.exit();
+    db.Review.remove({}, function(err, reviews){
+      console.log('removed all reviews');
+      reviewList.forEach( function(review) {
+        let newReview = new db.Review({
+          rating: review.rating,
+          description: review.description,
+          toiletName: review.toiletName,
+        });
+        db.Toilet.findOne({name: review.toiletName}, function(err, foundToilet){
+          if (err) {
+            console.log('could not find toilet', err);
+          }
+          review.toilet = foundToilet;
+          newReview.save(function(err, savedReview){
+            if (err) {
+              return console.log('SAVED REVIEW ERR',err);
+            }
+            console.log('THIS IS THE SAVED REVIEW', savedReview);
+            console.log('THIS IS THE TOILET', foundToilet);
+          });
+        });
+      });
+    });
   });
-
 });
 
-db.Review.remove({}, function(err, toilets){
-
-  db.Review.create(reviewList, function(err, reviews){
-    if (err) { return console.log('ERROR', err); }
-    console.log("all reviews:", reviews);
-    console.log("created", reviews.length, "reviews");
-    process.exit();
-  });
-
-});
+// db.Review.remove({}, function(err, reveiws){
+//
+//   db.Review.create(reviewList, function(err, reviews){
+//     if (err) { return console.log('ERROR', err); }
+//     console.log("all reviews:", reviews);
+//     console.log("created", reviews.length, "reviews");
+//   });
+//
+// });
