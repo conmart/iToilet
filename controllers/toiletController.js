@@ -32,6 +32,7 @@ function update(req,res) {
     toilet.name = req.body.name;
     toilet.address = req.body.address;
     toilet.price = req.body.price;
+    toilet.public = req.body.public;
         // toilet.rating = req.body.rating,
     toilet.amount = req.body.amount;
     toilet.save();

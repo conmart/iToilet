@@ -47,8 +47,7 @@ $(document).ready(function () {
     let toiletId = $(this).closest('.toilet');
     let toiletIdValue = toiletId.data('toilet-id');
     let modalClose = '#'+toiletId.data('toilet-id');
-    // $('.switch').prop("disabled", false);
-    // $('select').material_select();
+    console.log(toiletId.find('.edit-privacy').prop('checked'))
     $.ajax({
         method: "PUT",
         url: "/api/toilets/" + toiletIdValue,
@@ -139,15 +138,14 @@ function renderToilet (toilet) {
   });
 
   let allImagesHTML = images.join("");
-  // console.log(allImagesHTML);
 
   let public = "Public";
   let price = "Free";
-  if (toilet.public !== true) {
+
+  if (toilet.public === false) {
     public = "Private";
     price = toilet.price;
   }
-
 
   let modalBody = `
               <div id="${toilet._id}" class="modal toilet" data-toilet-id="${toilet._id}">
@@ -158,7 +156,7 @@ function renderToilet (toilet) {
                       <ul>
                         <li>Rating: ${toilet.rating}</li>
                         <li>Address: ${toilet.address}</li>
-                        <li>Public: ${public}</li>
+                        <li>${public}</li>
                         <li>Price: ${price}</li>
                         <li>Availability: ${toilet.availabilty}</li>
                         <li>Amount of Toilets: ${toilet.amount}</li>
