@@ -1,5 +1,5 @@
 $(document).ready(function () {
-  $('select').material_select();
+  $('.modal').modal();
   initMap();
 
   //grabs everything in the database and displays the content next to the map
