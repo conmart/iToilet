@@ -20,13 +20,10 @@ function create(req, res) {
       availability: req.body.availability,
       amount: req.body.amount,
       pictures: req.body.pictures,
-  }, function(err, createdToilet) {
-      if (err) {
-        console.log("error is ", err)
-      }
-      res.json(createdToilet);
-      res.sendStatus(201);
-  })
+  });
+      // res.json(createdToilet);
+      res.sendStatus(200);
+
 }
 
 function update(req,res) {

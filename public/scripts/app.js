@@ -13,42 +13,29 @@ $(document).ready(function () {
 //handles adding new toilets
   $('.new-toilet-form').on('submit', function(event) {
       event.preventDefault();
-      // console.log($('.add-name').val());
-      // console.log($('.add-address').val());
-      // console.log($('.add-name').val());
-
-      //this returns the availability value
-      // console.log($("input[name=group1]:checked").val())
-
-      //this returns the value of the rating
-      // console.log($('.add-rating')[1].value);
-
-      //this returns false if public, true if private
-      // console.log($('#switch-id').prop('checked'));
-
-      // console.log($('.add-picture').val());
 
       $.ajax({
-        method: "POST",
-        url: "api/toilets",
-        data: {
-          name: $('.add-name').val(),
-          address: $('.add-address').val(),
-          price: $('.add-price').val(),
-          rating: $('.add-rating')[1].value,
-          public: $('#switch-id').prop('checked'),
-          availability: $("input[name=group1]:checked").val(),
-          amount: $('.add-amount').val(),
-          pictures: $('.add-picture').val(),
-        }
+          method: "POST",
+          url: "api/toilets",
+          data: {
+              name: $('.add-name').val(),
+              address: $('.add-address').val(),
+              price: $('.add-price').val(),
+              rating: $('.add-rating')[1].value,
+              public: $('#switch-id').prop('checked'),
+              availability: $("input[name=group1]:checked").val(),
+              amount: $('.add-amount').val(),
+              pictures: $('.add-picture').val(),
+          },
+          success: function () {
+              $.ajax({
+                  method: "GET",
+                  url: '/api/toilets',
+                  success: renderToiletList,
+              });
+          }
       });
       });
-
-  // //Toggle between the toilet view and the edit toilet view
-  // $(document).on("click", ".edit-button", function() {
-  //   $(".before-edit").toggle()
-  //   $(".edit-form").toggle();
-  // });
 
     //handles the toggling between toilet description and editing toilets
   $('.modal-bodies').on('click', '.edit-button', handleEditToggle);
@@ -58,13 +45,13 @@ $(document).ready(function () {
   //handles the save functionality and also the toggling between toilet description/edit
   $(document).on("click", ".save-button", function() {
     let toiletId = $(this).closest('.toilet');
-    let toiletId2 = toiletId.data('toilet-id')
-    let modalClose = '#'+toiletId.data('toilet-id')
+    let toiletIdValue = toiletId.data('toilet-id');
+    let modalClose = '#'+toiletId.data('toilet-id');
     // $('.switch').prop("disabled", false);
     // $('select').material_select();
     $.ajax({
         method: "PUT",
-        url: "/api/toilets/" + toiletId2,
+        url: "/api/toilets/" + toiletIdValue,
         data: {
             id: toiletId.data('toilet-id'),
             name: toiletId.find('.edit-name').val(),
@@ -102,7 +89,8 @@ function handleEditToggle() {
 }
 
 function handleDelete() {
-  let toiletId = $(this).closest('.toilet').data('toilet-id');
+  let grabToilet = $(this).closest('.toilet')
+  let toiletId = grabToilet.data('toilet-id');
   $.ajax({
       method: "DELETE",
       url: "/api/toilets/" + toiletId,
@@ -113,7 +101,10 @@ function handleDelete() {
               success: renderToiletList,
           });
       }
-  })
+  });
+  let modalClose = '#'+toiletId;
+  $(modalClose).modal('close');
+
 }
 
 //google map api
