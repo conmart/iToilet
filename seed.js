@@ -71,7 +71,7 @@ db.Toilet.remove({}, function(err, toilets){
           if (err) {
             console.log('could not find toilet', err);
           }
-          review.toilet = foundToilet;
+          newReview.toilet = foundToilet;
           newReview.save(function(err, savedReview){
             if (err) {
               return console.log('SAVED REVIEW ERR',err);
