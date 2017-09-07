@@ -1,5 +1,3 @@
-console.log("app.js connected");
-
 $(document).ready(function () {
   $('select').material_select();
   initMap();
@@ -10,9 +8,7 @@ $(document).ready(function () {
     success: renderToiletList,
   });
 
-  $(document).on('click', '.edit-button', function() {
 
-  })
 
   $('.new-toilet-form').on('submit', function(event) {
       event.preventDefault();
@@ -21,15 +17,15 @@ $(document).ready(function () {
       // console.log($('.add-name').val());
 
       //this returns the availability value
-      console.log($("input[name=group1]:checked").val())
+      // console.log($("input[name=group1]:checked").val())
 
       //this returns the value of the rating
-      console.log($('.add-rating')[1].value);
+      // console.log($('.add-rating')[1].value);
 
       //this returns false if public, true if private
-      console.log($('#switch-id').prop('checked'));
+      // console.log($('#switch-id').prop('checked'));
 
-      console.log($('.add-picture').val());
+      // console.log($('.add-picture').val());
 
       $.ajax({
         method: "POST",
@@ -43,10 +39,9 @@ $(document).ready(function () {
           availability: $("input[name=group1]:checked").val(),
           amount: $('.add-amount').val(),
           pictures: $('.add-picture').val(),
-        },
-        success: renderToilet,
+        }
       });
-  });
+      });
 
   $(document).on("click", ".before-edit", function() {
     $(".before-edit").toggle()
@@ -55,10 +50,29 @@ $(document).ready(function () {
 
   $(document).on("click", ".save-button", function() {
     let toiletId = $(this).closest('.toilet');
-    let dataId = toiletId.data('toilet-id');
-    $('.switch').prop("disabled", false);
-    $('select').material_select();
-
+    let modalClose = '#'+toiletId.data('toilet-id')
+    // $('.switch').prop("disabled", false);
+    // $('select').material_select();
+    $.ajax({
+        method: "PUT",
+        url: "/api/toilets/" + toiletId,
+        data: {
+            id: toiletId.data('toilet-id'),
+            name: toiletId.find('.edit-name').val(),
+            address: toiletId.find('.edit-address').val(),
+            // rating: toiletId.find('.edit-rating')[1].value,
+            price: toiletId.find('.edit-price').val(),
+            public: toiletId.find('.edit-privacy').prop('checked'),
+            amount: toiletId.find('.edit-amount').val(),
+        },
+        // success: renderToiletList
+    });
+    $(modalClose).modal('close');
+      $.ajax({
+          method: "GET",
+          url: '/api/toilets',
+          success: renderToiletList,
+      });
   })
 
 
@@ -78,6 +92,7 @@ function initMap() {
 }
 
 function renderToiletList (list) {
+  $('.list-toilets').empty();
   list.forEach(function (toilet) {
     renderToilet(toilet);
   })
@@ -89,7 +104,7 @@ function renderToiletList (list) {
 
 function renderToilet (toilet) {
   let modalTrigger = `
-    <li><a class="waves-effect waves-light modal-trigger" href="#${toilet._id}">${toilet.name} Toilet</a></li>
+    <li><a class="waves-effect waves-light modal-trigger modal-edit" href="#${toilet._id}">${toilet.name} Toilet</a></li>
   `;
   $('.list-toilets').append(modalTrigger);
 
@@ -101,7 +116,7 @@ function renderToilet (toilet) {
   });
 
   let allImagesHTML = images.join("");
-  console.log(allImagesHTML);
+  // console.log(allImagesHTML);
 
   let public = "Public";
   let price = "Free";
@@ -139,7 +154,9 @@ function renderToilet (toilet) {
                   <a class="waves-effect waves-light btn edit-button">Edit</a>
                 </div>
                 </div>
+                
                 <!--Beginning of edit form-->
+                
                 <form class="col s12 new-toilet-form edit-form">
               <div class="row">
                 <div class="input-field col s6">
@@ -155,7 +172,6 @@ function renderToilet (toilet) {
                 <div class="col s6">
                   <label edit-form>Rate the toilet</label>
                   <select class="edit-rating edit-form">
-                    <option value="" disabled selected>Rate the toilet</option>
                     <option value="1">&#9733;</option>
                     <option value="2">&#9733;&#9733;</option>
                     <option value="3">&#9733;&#9733;&#9733;</option>
@@ -165,17 +181,17 @@ function renderToilet (toilet) {
                  
                 </div>
                 <div class="input-field col s6">
-                  <input class="edit-price" type="number">
+                  <input class="edit-price" type="number"}>
                   <label for="edit-price">Price</label>
                 </div>
               </div>
               
               <div class="row">
                   <div class="col s6">
-                    <div class="switch edit-form">
+                    <div class="switch">
                       <label>
                         Private
-                        <input class="switch-id" type="checkbox" value="Private">
+                        <input class="switch-id edit-privacy" type="checkbox" value="Private">
                         <span class="lever"></span>
                         Public
                       </label>
@@ -193,7 +209,7 @@ function renderToilet (toilet) {
                 
                 <div class="row">
                 <div class="input-field col s6">
-                  <input class="edit-amount" type="number" >
+                  <input class="edit-amount" type="number">
                   <label for="edit-amount">Number of Toilets</label>
                 </div>
                 <div class="modal-footer">
@@ -203,7 +219,6 @@ function renderToilet (toilet) {
               </form>
                 </div>
 `
-        //Edit Modal Starts Below
 
 
     $('.modal-bodies').append(modalBody);

@@ -22,12 +22,9 @@ app.get('/', function homepage(req, res) {
   res.sendFile(__dirname + '/views/index.html');
 });
 
-
 app.get('/api/toilets', controllers.toilets.index);
 app.post('/api/toilets', controllers.toilets.create);
-
-
-
+app.put('/api/toilets/:id', controllers.toilets.update)
 
 
 app.listen(process.env.PORT || 3000, function () {
