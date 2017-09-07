@@ -29,12 +29,35 @@ toiletData.push({
 })
 
 
+
+let reviewList = [
+  {
+    rating: 5,
+    description: "Best toilet ever!",
+  },
+  {
+    rating: 3,
+    description: "It was okay I guess.",
+  }
+]
+
 db.Toilet.remove({}, function(err, toilets){
 
   db.Toilet.create(toiletData, function(err, toilets){
     if (err) { return console.log('ERROR', err); }
     console.log("all toilets:", toilets);
     console.log("created", toilets.length, "toilets");
+    process.exit();
+  });
+
+});
+
+db.Review.remove({}, function(err, toilets){
+
+  db.Review.create(reviewList, function(err, reviews){
+    if (err) { return console.log('ERROR', err); }
+    console.log("all reviews:", reviews);
+    console.log("created", reviews.length, "reviews");
     process.exit();
   });
 

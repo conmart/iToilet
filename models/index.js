@@ -3,3 +3,4 @@ mongoose.connect( process.env.MONGODB_URI || "mongodb://localhost/iToilet", {use
 mongoose.Promise = global.Promise;
 
 module.exports.Toilet = require('./toilet');
+module.exports.Review = require('./review');

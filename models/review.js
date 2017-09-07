@@ -4,8 +4,8 @@ const Schema = mongoose.Schema;
 const ReviewSchema = new Schema({
   rating: Number,
   description: String,
-  date: Date,
-)}
+  date: {type: Date, default: Date.now}
+});
 
-  const Toilet = mongoose.model('Toilet', ToiletSchema);
-  module.exports = Toilet;
+const Review = mongoose.model('Review', ReviewSchema);
+module.exports = Review;
