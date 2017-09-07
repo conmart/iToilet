@@ -2,6 +2,7 @@ $(document).ready(function () {
   $('select').material_select();
   initMap();
 
+  //grabs everything in the database and displays the content next to the map
   $.ajax({
     method: "GET",
     url: '/api/toilets',
@@ -9,7 +10,7 @@ $(document).ready(function () {
   });
 
 
-
+//handles adding new toilets
   $('.new-toilet-form').on('submit', function(event) {
       event.preventDefault();
       // console.log($('.add-name').val());
@@ -49,16 +50,21 @@ $(document).ready(function () {
   //   $(".edit-form").toggle();
   // });
 
+    //handles the toggling between toilet description and editing toilets
   $('.modal-bodies').on('click', '.edit-button', handleEditToggle);
 
+  $('.modal-bodies').on('click', '.delete-button', handleDelete);
+
+  //handles the save functionality and also the toggling between toilet description/edit
   $(document).on("click", ".save-button", function() {
     let toiletId = $(this).closest('.toilet');
+    let toiletId2 = toiletId.data('toilet-id')
     let modalClose = '#'+toiletId.data('toilet-id')
     // $('.switch').prop("disabled", false);
     // $('select').material_select();
     $.ajax({
         method: "PUT",
-        url: "/api/toilets/" + toiletId,
+        url: "/api/toilets/" + toiletId2,
         data: {
             id: toiletId.data('toilet-id'),
             name: toiletId.find('.edit-name').val(),
@@ -68,16 +74,17 @@ $(document).ready(function () {
             public: toiletId.find('.edit-privacy').prop('checked'),
             amount: toiletId.find('.edit-amount').val(),
         },
-        // success: renderToiletList
+        success: function() {
+            $.ajax({
+                method: "GET",
+                url: '/api/toilets',
+                success: renderToiletList,
+            });
+        },
     });
     toiletId.find(".before-edit").toggle()
     toiletId.find(".edit-form").toggle();
     $(modalClose).modal('close');
-    $.ajax({
-        method: "GET",
-        url: '/api/toilets',
-        success: renderToiletList,
-    });
   })
 
 
@@ -87,13 +94,29 @@ $(document).ready(function () {
   // end of document ready
 })
 
+//handles toilet description/edit toggling
 function handleEditToggle() {
   let $thisToilet = $(this).closest('.toilet');
-    $thisToilet.find(".before-edit").toggle()
-    $thisToilet.find(".edit-form").toggle();
+  $thisToilet.find(".before-edit").toggle();
+  $thisToilet.find(".edit-form").toggle();
 }
 
+function handleDelete() {
+  let toiletId = $(this).closest('.toilet').data('toilet-id');
+  $.ajax({
+      method: "DELETE",
+      url: "/api/toilets/" + toiletId,
+      success: function() {
+          $.ajax({
+              method: "GET",
+              url: '/api/toilets',
+              success: renderToiletList,
+          });
+      }
+  })
+}
 
+//google map api
 function initMap() {
   let map = new google.maps.Map(document.getElementById('map'), {
         zoom: 10,
@@ -101,6 +124,7 @@ function initMap() {
       });
 }
 
+//goes through each toilet in the database and inputs them into renderToilet
 function renderToiletList (list) {
   $('.list-toilets').empty();
   list.forEach(function (toilet) {
@@ -109,9 +133,7 @@ function renderToiletList (list) {
   $('.modal').modal();
 }
 
-
-
-
+//creates the structure of the modals description/save for the individual toilet
 function renderToilet (toilet) {
   let modalTrigger = `
     <li><a class="waves-effect waves-light modal-trigger modal-edit" href="#${toilet._id}">${toilet.name} Toilet</a></li>
@@ -162,6 +184,7 @@ function renderToilet (toilet) {
               
                 <div class="modal-footer">
                   <a class="waves-effect waves-light btn edit-button">Edit</a>
+                  <a class="waves-effect waves-light btn delete-button">Delete</a>
                 </div>
                 </div>
                 
