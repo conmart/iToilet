@@ -198,12 +198,12 @@ function renderToilet (toilet) {
                     </div>
                   </div>
                 <div class="col s6">
-                      <input class="with-gap edit-avail-1" name="group1" type="radio" value="low"/>
-                      <label class="radio-buttons" for="edit-avail-1">Low</label>
-                      <input class="with-gap edit-avail-2" name="group1" type="radio" value="medium"/>
-                      <label class="radio-buttons" for="edit-avail-2">Medium</label>
-                      <input class="with-gap edit-avail-3" name="group1" type="radio" value="high"/>
-                      <label class="radio-buttons" for="edit-avail-3">High</label>
+                      <input id="edit-avail-1-${toilet._id}" class="with-gap edit-avail-1" name="group1" type="radio" value="low" />
+                      <label class="radio-buttons" for="edit-avail-1-${toilet._id}">Low</label>
+                      <input class="with-gap edit-avail-2-${toilet._id}" name="group1" type="radio" value="medium"/>
+                      <label class="radio-buttons" for="edit-avail-2-${toilet._id}">Medium</label>
+                      <input class="with-gap edit-avail-3-${toilet._id}" name="group1" type="radio" value="high"/>
+                      <label class="radio-buttons" for="edit-avail-3-${toilet._id}">High</label>
                 </div>
                 </div>
                 
