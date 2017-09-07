@@ -43,10 +43,13 @@ $(document).ready(function () {
       });
       });
 
-  $(document).on("click", ".before-edit", function() {
-    $(".before-edit").toggle()
-    $(".edit-form").toggle();
-  });
+  // //Toggle between the toilet view and the edit toilet view
+  // $(document).on("click", ".edit-button", function() {
+  //   $(".before-edit").toggle()
+  //   $(".edit-form").toggle();
+  // });
+
+  $('.modal-bodies').on('click', '.edit-button', handleEditToggle);
 
   $(document).on("click", ".save-button", function() {
     let toiletId = $(this).closest('.toilet');
@@ -67,12 +70,14 @@ $(document).ready(function () {
         },
         // success: renderToiletList
     });
+    toiletId.find(".before-edit").toggle()
+    toiletId.find(".edit-form").toggle();
     $(modalClose).modal('close');
-      $.ajax({
-          method: "GET",
-          url: '/api/toilets',
-          success: renderToiletList,
-      });
+    $.ajax({
+        method: "GET",
+        url: '/api/toilets',
+        success: renderToiletList,
+    });
   })
 
 
@@ -82,6 +87,11 @@ $(document).ready(function () {
   // end of document ready
 })
 
+function handleEditToggle() {
+  let $thisToilet = $(this).closest('.toilet');
+    $thisToilet.find(".before-edit").toggle()
+    $thisToilet.find(".edit-form").toggle();
+}
 
 
 function initMap() {
@@ -160,12 +170,12 @@ function renderToilet (toilet) {
                 <form class="col s12 new-toilet-form edit-form">
               <div class="row">
                 <div class="input-field col s6">
-                  <input type="text" class="edit-name">
-                  <label for="edit-name">Name</label>
+                  <input type="text" class="edit-name" value="${toilet.name}">
+                  <label class="active" for="edit-name">Name</label>
                 </div>
                 <div class="input-field col s6">
-                  <input type="text" class="edit-address">
-                  <label for="edit-address">Address</label>
+                  <input type="text" class="edit-address" value="${toilet.address}">
+                  <label class="active" for="edit-address">Address</label>
                 </div>
               </div>
               <div class="row">
@@ -181,8 +191,8 @@ function renderToilet (toilet) {
                  
                 </div>
                 <div class="input-field col s6">
-                  <input class="edit-price" type="number"}>
-                  <label for="edit-price">Price</label>
+                  <input class="edit-price" type="number" value="${toilet.price}"}>
+                  <label class="active" for="edit-price">Price</label>
                 </div>
               </div>
               
@@ -197,20 +207,22 @@ function renderToilet (toilet) {
                       </label>
                     </div>
                   </div>
-                <div class="col s6">
+                <div class="col s6 edit-radio-form">
+                      <label class="radio-buttons" for="edit-avail-1-${toilet._id}">Availability of Toilets</label>
+                      </br>
                       <input id="edit-avail-1-${toilet._id}" class="with-gap edit-avail-1" name="group1" type="radio" value="low" />
                       <label class="radio-buttons" for="edit-avail-1-${toilet._id}">Low</label>
-                      <input class="with-gap edit-avail-2-${toilet._id}" name="group1" type="radio" value="medium"/>
+                      <input id="edit-avail-2-${toilet._id}" class="with-gap edit-avail-2" name="group1" type="radio" value="medium"/>
                       <label class="radio-buttons" for="edit-avail-2-${toilet._id}">Medium</label>
-                      <input class="with-gap edit-avail-3-${toilet._id}" name="group1" type="radio" value="high"/>
+                      <input id="edit-avail-3-${toilet._id}" class="with-gap edit-avail-3" name="group1" type="radio" value="high"/>
                       <label class="radio-buttons" for="edit-avail-3-${toilet._id}">High</label>
                 </div>
                 </div>
                 
                 <div class="row">
                 <div class="input-field col s6">
-                  <input class="edit-amount" type="number">
-                  <label for="edit-amount">Number of Toilets</label>
+                  <input class="edit-amount" type="number" value="${toilet.amount}">
+                  <label class="active" for="edit-amount">Number of Toilets</label>
                 </div>
                 <div class="modal-footer">
                   <a class="waves-effect waves-light btn save-button">Save</a>

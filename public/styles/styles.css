@@ -60,3 +60,7 @@ a {
 .edit-form {
   display: none;
 }
+
+.edit-radio-form {
+  margin-top: -21px;
+}
