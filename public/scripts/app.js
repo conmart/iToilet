@@ -10,6 +10,10 @@ $(document).ready(function () {
     success: renderToiletList,
   });
 
+  $(document).on('click', '.edit-button', function() {
+
+  })
+
   $('.new-toilet-form').on('submit', function(event) {
       event.preventDefault();
       // console.log($('.add-name').val());
@@ -41,10 +45,21 @@ $(document).ready(function () {
           pictures: $('.add-picture').val(),
         },
         success: renderToilet,
-      })
+      });
+  });
+
+  $(document).on("click", ".before-edit", function() {
+    $(".before-edit").toggle()
+    $(".edit-form").toggle();
+  });
+
+  $(document).on("click", ".save-button", function() {
+    let toiletId = $(this).closest('.toilet');
+    let dataId = toiletId.data('toilet-id');
+    $('.switch').prop("disabled", false);
+    $('select').material_select();
 
   })
-
 
 
 
@@ -68,6 +83,9 @@ function renderToiletList (list) {
   })
   $('.modal').modal();
 }
+
+
+
 
 function renderToilet (toilet) {
   let modalTrigger = `
@@ -94,8 +112,8 @@ function renderToilet (toilet) {
 
 
   let modalBody = `
-              <div id="${toilet._id}" class="modal toilet">
-                <div class="modal-content">
+              <div id="${toilet._id}" class="modal toilet" data-toilet-id="${toilet._id}">
+                <div class="modal-content before-edit">
                   <div class="row">
                     <div class="toilet-info col s5">
                       <h4>${toilet.name} Toilet</h4>
@@ -116,11 +134,78 @@ function renderToilet (toilet) {
                     <li>Review 1</li>
                     <li>Review 2</li>
                   </ol>
+              
+                <div class="modal-footer">
+                  <a class="waves-effect waves-light btn edit-button">Edit</a>
+                </div>
+                </div>
+                <!--Beginning of edit form-->
+                <form class="col s12 new-toilet-form edit-form">
+              <div class="row">
+                <div class="input-field col s6">
+                  <input type="text" class="edit-name">
+                  <label for="edit-name">Name</label>
+                </div>
+                <div class="input-field col s6">
+                  <input type="text" class="edit-address">
+                  <label for="edit-address">Address</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col s6">
+                  <label edit-form>Rate the toilet</label>
+                  <select class="edit-rating edit-form">
+                    <option value="" disabled selected>Rate the toilet</option>
+                    <option value="1">&#9733;</option>
+                    <option value="2">&#9733;&#9733;</option>
+                    <option value="3">&#9733;&#9733;&#9733;</option>
+                    <option value="4">&#9733;&#9733;&#9733;&#9733;</option>
+                    <option value="5">&#9733;&#9733;&#9733;&#9733;&#9733;</option>
+                  </select>
+                 
+                </div>
+                <div class="input-field col s6">
+                  <input class="edit-price" type="number">
+                  <label for="edit-price">Price</label>
+                </div>
+              </div>
+              
+              <div class="row">
+                  <div class="col s6">
+                    <div class="switch edit-form">
+                      <label>
+                        Private
+                        <input class="switch-id" type="checkbox" value="Private">
+                        <span class="lever"></span>
+                        Public
+                      </label>
+                    </div>
+                  </div>
+                <div class="col s6">
+                      <input class="with-gap edit-avail-1" name="group1" type="radio" value="low"/>
+                      <label class="radio-buttons" for="edit-avail-1">Low</label>
+                      <input class="with-gap edit-avail-2" name="group1" type="radio" value="medium"/>
+                      <label class="radio-buttons" for="edit-avail-2">Medium</label>
+                      <input class="with-gap edit-avail-3" name="group1" type="radio" value="high"/>
+                      <label class="radio-buttons" for="edit-avail-3">High</label>
+                </div>
+                </div>
+                
+                <div class="row">
+                <div class="input-field col s6">
+                  <input class="edit-amount" type="number" >
+                  <label for="edit-amount">Number of Toilets</label>
                 </div>
                 <div class="modal-footer">
-
+                  <a class="waves-effect waves-light btn save-button">Save</a>
                 </div>
-              </div>`
+              </div>
+              </form>
+                </div>
+`
+        //Edit Modal Starts Below
+
+
     $('.modal-bodies').append(modalBody);
     $('.modal').modal();
 }
