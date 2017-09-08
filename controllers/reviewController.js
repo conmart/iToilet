@@ -23,20 +23,18 @@ function which (req, res) {
 }
 
 function create (req, res) {
-  console.log('create review body', req.body);
-  console.log('Id that will be searched', req.params.toiletId);
-  let desiredToilet;
+  // console.log('create review body', req.body);
+  // console.log('Id that will be searched', req.params.toiletId);
   db.Toilet.findById(req.params.toiletId, function (err, foundToilet) {
     if (err) {
       console.log(err);
     }
-    desiredToilet = foundToilet;
     db.Review.create({
       rating: req.body.rating,
       description: req.body.description,
-      toilet: desiredToilet,
+      toilet: foundToilet,
     });
-    res.json(desiredToilet);
+    res.json(foundToilet);
   });
 
 }
