@@ -53,6 +53,7 @@ $(document).ready(function () {
           },
           success: function(data) {
               console.log("success");
+              lengthOfToilets++;
               renderToilet(data);
               //     console.log(returnData)
                   var marker = new google.maps.Marker({
@@ -67,7 +68,10 @@ $(document).ready(function () {
     //handles the toggling between toilet description and editing toilets
   $('.modal-bodies').on('click', '.edit-button', handleEditToggle);
 
-  $('.modal-bodies').on('click', '.delete-button', handleDelete);
+  $('.modal-bodies').on('click', '.delete-button', function() {
+      lengthOfToilets--;
+      handleDelete();
+    });
 
   $('.modal-bodies').on('click', '.review-button', handleReviewToggle);
   $('.modal-bodies').on('click', '.add-review-button', handleAddReview);
