@@ -12,13 +12,39 @@ var options = {
 };
 var geocoder = NodeGeocoder(options);
 
+// variables for results pages
+let skip = 0;
+let limit = 1;
+let lengthOfToilets;
+
+function count (req, res) {
+  db.Toilet.find({}, function (err, allToilets) {
+    if (err) {
+      console.log('ERROR at count controller ', err);
+    }
+    lengthOfToilets = allToilets.length;
+    console.log('length of toilets', lengthOfToilets);
+    res.json(lengthOfToilets);
+  })
+}
+
+function nextPage(req, res) {
+  db.Toilet.find({}, function(err, nextToilets) {
+    if (err) {
+      console.log('ERROR at index controller ', err);
+    }
+    res.json(nextToilets)
+  }).limit(limit).skip(parseInt(req.params.skip))
+
+}
+
 function index(req, res) {
   db.Toilet.find({}, function(err, allToilets) {
     if (err) {
       console.log('ERROR at index controller ', err);
     }
     res.json(allToilets)
-  })
+  }).limit(limit);
 }
 
 function create(req, res) {
@@ -87,8 +113,10 @@ function destroy(req,res) {
 }
 
 module.exports = {
+  count: count,
   index: index,
   create: create,
   update: update,
   destroy: destroy,
+  nextPage: nextPage,
 }

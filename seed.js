@@ -50,7 +50,7 @@ toiletData.push({
 });
 
 toiletData.push({
-    name: "New York",
+    name: "Seattle",
     address: "New York City",
     lat: 55.798579,
     long: -122.396911,
@@ -63,7 +63,7 @@ toiletData.push({
 });
 
 toiletData.push({
-    name: "New York",
+    name: "Los Angeles",
     address: "New York City",
     lat: 35.798579,
     long: -122.396911,

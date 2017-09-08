@@ -3,9 +3,25 @@ $(document).ready(function () {
   $('.modal').modal();
     initMap();
   //grabs everything in the database and displays the content next to the map
+  let skip = 0;
+  let limit = 1;
+  let lengthOfToilets;
+
   $.ajax({
     method: "GET",
-    url: '/api/toilets',
+    url: '/api/allToilets',
+    success: function (length) {
+      console.log(length);
+      lengthOfToilets = length;
+      console.log('front end lengthOfToilets', lengthOfToilets);
+    }
+  })
+
+
+
+  $.ajax({
+    method: "GET",
+    url: '/api/toilets/',
     success: function(data) {
         renderToiletList(data);
         data.forEach(function (returnData) {
@@ -91,6 +107,39 @@ $(document).ready(function () {
   })
 
 
+  // Flips to next page of results
+  $('.next-button').on('click', function () {
+    // console.log('next click length', lengthOfToilets);
+    if (skip === 0) {
+      $('.previous-button').toggle();
+    }
+    skip += limit;
+    if (skip + limit >= lengthOfToilets) {
+      $('.next-button').toggle();
+    }
+    $.ajax({
+      method: "GET",
+      url: '/api/toilets/' + skip,
+      success: renderToiletList
+    })
+  })
+
+  //Flips to previous page of results
+  $('.previous-button').on('click', function () {
+    // console.log('next click length', lengthOfToilets);
+    skip -= limit;
+    if (skip === 0) {
+      $('.previous-button').toggle();
+    }
+    if ($('.next-button').is(":hidden")) {
+      $('.next-button').toggle();
+    }
+    $.ajax({
+      method: "GET",
+      url: '/api/toilets/' + skip,
+      success: renderToiletList
+    })
+  })
 
 
 
