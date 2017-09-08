@@ -4,7 +4,7 @@ $(document).ready(function () {
     initMap();
   //grabs everything in the database and displays the content next to the map
   let skip = 0;
-  let limit = 1;
+  let limit = 2;
   let lengthOfToilets;
 
   $.ajax({
@@ -120,7 +120,17 @@ $(document).ready(function () {
     $.ajax({
       method: "GET",
       url: '/api/toilets/' + skip,
-      success: renderToiletList
+      success: function(data) {
+          renderToiletList(data);
+          initMap();
+          data.forEach(function (returnData) {
+              var marker = new google.maps.Marker({
+                  position: {lat: returnData.lat, lng: returnData.long},
+                  map: map,
+                  title: returnData.name,
+              });
+          })
+      }
     })
   })
 
@@ -137,7 +147,17 @@ $(document).ready(function () {
     $.ajax({
       method: "GET",
       url: '/api/toilets/' + skip,
-      success: renderToiletList
+      success: function(data) {
+          renderToiletList(data);
+          initMap();
+          data.forEach(function (returnData) {
+              var marker = new google.maps.Marker({
+                  position: {lat: returnData.lat, lng: returnData.long},
+                  map: map,
+                  title: returnData.name,
+              });
+          })
+      }
     })
   })
 
