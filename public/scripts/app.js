@@ -177,7 +177,7 @@ function handleDeleteReview () {
     method: "DELETE",
     url: "/api/reviews/" + reviewId,
     success: function() {
-      console.log("Delete review success");
+      // console.log("Delete review success");
       $('[data-review-id =' + reviewId + ']').remove();
 
     }
