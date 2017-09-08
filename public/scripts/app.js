@@ -43,6 +43,8 @@ $(document).ready(function () {
 
   $('.modal-bodies').on('click', '.delete-button', handleDelete);
 
+  $('.modal-bodies').on('click', '.review-button', handleReviewToggle);
+
   //handles the save functionality and also the toggling between toilet description/edit
   $(document).on("click", ".save-button", function() {
     let toiletId = $(this).closest('.toilet');
@@ -105,6 +107,13 @@ function handleDelete() {
   let modalClose = '#'+toiletId;
   $(modalClose).modal('close');
 
+}
+
+
+function handleReviewToggle() {
+  let $thisToilet = $(this).closest('.toilet');
+  $thisToilet.find(".before-edit").toggle();
+  $thisToilet.find(".review-form").toggle();
 }
 
 //google map api
@@ -203,6 +212,7 @@ function renderToilet (toilet) {
                 <div class="modal-footer">
                   <a class="waves-effect waves-light btn edit-button">Edit</a>
                   <a class="waves-effect waves-light btn delete-button">Delete</a>
+                  <a class="waves-effect waves-light btn review-button">Write Review</a>
                 </div>
                 </div>
 
@@ -270,7 +280,39 @@ function renderToilet (toilet) {
                 </div>
               </div>
               </form>
+
+              <!--End of edit form, beginning of review form-->
+
+              <form class="col s12 review-form">
+                <div class="row">
+                  <div class="col s6">
+                    <label edit-form>Rate the toilet</label>
+                    <select class="review-rating review-form">
+                      <option value="1">&#9733;</option>
+                      <option value="2">&#9733;&#9733;</option>
+                      <option value="3">&#9733;&#9733;&#9733;</option>
+                      <option value="4">&#9733;&#9733;&#9733;&#9733;</option>
+                      <option value="5">&#9733;&#9733;&#9733;&#9733;&#9733;</option>
+                    </select>
+
+                  </div>
+                  <div class="input-field col s6">
+                    <input id="review-description-${toiletId}" type="text" class="add-name">
+                    <label for="review-description-${toiletId}">Review</label>
+                  </div>
                 </div>
+
+                <div class="modal-footer">
+                  <a class="waves-effect waves-light btn add-review-button">Add Review</a>
+                </div>
+
+
+
+              </form>
+                </div>
+
+
+
 `
 
 
