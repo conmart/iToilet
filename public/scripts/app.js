@@ -126,12 +126,41 @@ function renderToiletList (list) {
 
 //creates the structure of the modals description/save for the individual toilet
 function renderToilet (toilet) {
+  let toiletId = toilet._id;
+
   let modalTrigger = `
-    <li><a class="waves-effect waves-light modal-trigger modal-edit" href="#${toilet._id}">${toilet.name} Toilet</a></li>
+    <li><a class="waves-effect waves-light modal-trigger modal-edit" href="#${toiletId}">${toilet.name} Toilet</a></li>
   `;
   $('.list-toilets').append(modalTrigger);
 
   let images = [];
+
+  let reviewsHTML = "No Reviews Yet :("
+
+  $.ajax({
+    method: "GET",
+    url: '/api/reviews/' + toiletId
+  })
+  .then(function(receivedReviews) {
+    console.log('Reviews that came back', receivedReviews);
+    if (receivedReviews.length > 0) {
+      let reviewsArray = []
+      receivedReviews.forEach(function (review) {
+        let format = `<li>${review.rating} Star Review: "${review.description}" - Posted: ${review.date}</li>`;
+        reviewsArray.push(format);
+      })
+      reviewsHTML = reviewsArray.join("");
+      console.log('New Reviews HTML', reviewsHTML);
+      let $target = $('[data-toilet-id =' + toiletId + ']').find('.reviews-here');
+      $target.html(reviewsHTML);
+    }
+  })
+  .catch(function(err) {
+    console.log(err);
+  })
+
+
+
 
   toilet.pictures.forEach(function (picture) {
     let imageHTML = `<img src="${picture}">`
@@ -167,9 +196,8 @@ function renderToilet (toilet) {
                       ${allImagesHTML}
                     </div>
                 </div>
-                  <ol>
-                    <li>Review 1</li>
-                    <li>Review 2</li>
+                  <ol class ="reviews-here">
+                    ${reviewsHTML}
                   </ol>
 
                 <div class="modal-footer">
@@ -246,6 +274,6 @@ function renderToilet (toilet) {
 `
 
 
-    $('.modal-bodies').append(modalBody);
+    $('.modal-bodies').prepend(modalBody);
     $('.modal').modal();
 }
