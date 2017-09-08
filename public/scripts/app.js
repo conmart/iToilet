@@ -56,6 +56,8 @@ $(document).ready(function () {
   $('.modal-bodies').on('click', '.review-button', handleReviewToggle);
   $('.modal-bodies').on('click', '.add-review-button', handleAddReview);
 
+  $('.modal-bodies').on('click', '.delete-review', handleDeleteReview);
+
 
   //handles the save functionality and also the toggling between toilet description/edit
   $(document).on("click", ".save-button", function() {
@@ -166,9 +168,22 @@ function handleAddReview() {
   .catch(function(err) {
     console.log('Ajax review post error', err);
   });
-
 }
 
+function handleDeleteReview () {
+  let $thisReview = $(this).closest('.review');
+  let reviewId = $thisReview.data('review-id');
+  $.ajax({
+    method: "DELETE",
+    url: "/api/reviews/" + reviewId,
+    success: function() {
+      console.log("Delete review success");
+      $('[data-review-id =' + reviewId + ']').remove();
+
+    }
+  })
+
+}
 
 
 
@@ -229,8 +244,12 @@ function renderToilet (toilet) {
     // console.log('Reviews that came back', receivedReviews);
     if (receivedReviews.length > 0) {
       let reviewsArray = []
+      //Formats reviews as HTML
       receivedReviews.forEach(function (review) {
-        let format = `<li>${review.rating} Star Review: "${review.description}" - Posted: ${review.date}</li>`;
+        let format = `<li class="review" data-review-id="${review._id}">
+          <h4>${review.rating} Star Review: "${review.description}" - Posted: ${review.date}</h4>
+          <button class="delete-review">Delete Review</button>
+          </li>`;
         reviewsArray.push(format);
       })
       reviewsHTML = reviewsArray.join("");
@@ -242,8 +261,6 @@ function renderToilet (toilet) {
   .catch(function(err) {
     console.log(err);
   })
-
-
 
   // Formats all the pictures tied to a toilet into an HTML-friendly block
   toilet.pictures.forEach(function (picture) {

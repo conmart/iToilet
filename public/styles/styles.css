@@ -72,3 +72,13 @@ a {
 .review-form {
   display: none;
 }
+
+h4 {
+  font-size: 20px;
+
+}
+
+.delete-review {
+  margin: 10px;
+  margin-top: -25px;
+}

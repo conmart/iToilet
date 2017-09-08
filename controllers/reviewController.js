@@ -36,13 +36,19 @@ function create (req, res) {
     });
     res.json(foundToilet);
   });
-
 }
 
+
+function destroy (req, res) {
+  db.Review.findByIdAndRemove({_id: req.params.reviewId}, function(err, deletedReview) {
+    res.sendStatus(200);
+  });
+}
 
 
 module.exports = {
   index: index,
   which: which,
   create: create,
+  destroy: destroy
 }
