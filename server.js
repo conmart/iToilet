@@ -30,6 +30,7 @@ app.delete('/api/toilets/:id', controllers.toilets.destroy);
 
 app.get('/api/reviews', controllers.reviews.index);
 app.get('/api/reviews/:toiletId', controllers.reviews.which)
+app.post('/api/reviews/:toiletId', controllers.reviews.create)
 
 
 

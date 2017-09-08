@@ -44,6 +44,8 @@ $(document).ready(function () {
   $('.modal-bodies').on('click', '.delete-button', handleDelete);
 
   $('.modal-bodies').on('click', '.review-button', handleReviewToggle);
+  $('.modal-bodies').on('click', '.add-review-button', handleAddReview);
+
 
   //handles the save functionality and also the toggling between toilet description/edit
   $(document).on("click", ".save-button", function() {
@@ -109,12 +111,56 @@ function handleDelete() {
 
 }
 
-
+// Handles showing review form
 function handleReviewToggle() {
   let $thisToilet = $(this).closest('.toilet');
   $thisToilet.find(".before-edit").toggle();
   $thisToilet.find(".review-form").toggle();
 }
+
+//Handles submiting review form
+function handleAddReview() {
+  let $thisToilet = $(this).closest('.toilet');
+  let toiletId = $thisToilet.data('toilet-id');
+  console.log(toiletId);
+  let descriptionSelector = '#review-description-' + toiletId;
+  console.log('review description', $(descriptionSelector).val());
+  console.log('review rating', $thisToilet.find('.review-rating')[0].value);
+  let postURL = "api/reviews/" + toiletId;
+  console.log(postURL);
+  $.ajax({
+    method: "POST",
+    url: postURL,
+    data: {
+      rating: $thisToilet.find('.review-rating')[0].value,
+      description: $(descriptionSelector).val()
+    },
+    // success: handleUpdatedToilet
+  })
+  .then(function (updatedToilet) {
+    console.log('received toilet', updatedToilet);
+    let modalClose = '#'+toiletId;
+    $(modalClose).modal('close');
+
+    let toiletModalTrigger = '.trigger-for-' + toiletId;
+
+    $('[data-toilet-id =' + toiletId + ']').remove();
+    $(toiletModalTrigger).remove();
+
+    renderToilet(updatedToilet);
+
+    $('[data-toilet-id =' + toiletId + ']')[0].scrollIntoView();
+  })
+  .catch(function(err) {
+    console.log('Ajax review post error', err);
+  });
+
+}
+
+
+
+
+
 
 //google map api
 function initMap() {
@@ -137,21 +183,24 @@ function renderToiletList (list) {
 function renderToilet (toilet) {
   let toiletId = toilet._id;
 
+  //creates hompage triggers for corresponding toilet modals
   let modalTrigger = `
-    <li><a class="waves-effect waves-light modal-trigger modal-edit" href="#${toiletId}">${toilet.name} Toilet</a></li>
+    <li><a class="waves-effect waves-light modal-trigger modal-edit trigger-for-${toiletId}" href="#${toiletId}">${toilet.name} Toilet</a></li>
   `;
   $('.list-toilets').append(modalTrigger);
 
   let images = [];
 
+  // Reviews default
   let reviewsHTML = "No Reviews Yet :("
 
+  // Looks for reviews and adds them to their corresponding modals
   $.ajax({
     method: "GET",
     url: '/api/reviews/' + toiletId
   })
   .then(function(receivedReviews) {
-    console.log('Reviews that came back', receivedReviews);
+    // console.log('Reviews that came back', receivedReviews);
     if (receivedReviews.length > 0) {
       let reviewsArray = []
       receivedReviews.forEach(function (review) {
@@ -159,7 +208,7 @@ function renderToilet (toilet) {
         reviewsArray.push(format);
       })
       reviewsHTML = reviewsArray.join("");
-      console.log('New Reviews HTML', reviewsHTML);
+      // console.log('New Reviews HTML', reviewsHTML);
       let $target = $('[data-toilet-id =' + toiletId + ']').find('.reviews-here');
       $target.html(reviewsHTML);
     }
@@ -170,12 +219,11 @@ function renderToilet (toilet) {
 
 
 
-
+  // Formats all the pictures tied to a toilet into an HTML-friendly block
   toilet.pictures.forEach(function (picture) {
     let imageHTML = `<img src="${picture}">`
     images.push(imageHTML);
   });
-
   let allImagesHTML = images.join("");
 
   let public = "Public";
