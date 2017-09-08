@@ -7,6 +7,7 @@ $(document).ready(function () {
     method: "GET",
     url: '/api/toilets',
     success: function(data) {
+        renderToiletList(data);
         data.forEach(function (returnData) {
             console.log(returnData)
             var marker = new google.maps.Marker({
