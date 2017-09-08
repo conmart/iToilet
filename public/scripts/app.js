@@ -4,7 +4,7 @@ $(document).ready(function () {
     initMap();
   //grabs everything in the database and displays the content next to the map
   let skip = 0;
-  let limit = 2;
+  let limit = 5;
   let lengthOfToilets;
 
   $.ajax({

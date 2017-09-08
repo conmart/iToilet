@@ -14,7 +14,7 @@ var geocoder = NodeGeocoder(options);
 
 // variables for results pages
 let skip = 0;
-let limit = 2;
+let limit = 5;
 let lengthOfToilets;
 
 function count (req, res) {
