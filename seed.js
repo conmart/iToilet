@@ -40,6 +40,19 @@ toiletData.push({
     name: "New York",
     address: "New York City",
     lat: 45.798579,
+    long: 74.0059,
+    price: 0,
+    rating: 1,
+    public: true,
+    availability: "Medium",
+    amount: 1,
+    pictures: ["http://www.freeiconspng.com/uploads/bathroom-restroom-toilet-icon-20.png", "http://i.imgur.com/aExxCQv.png?1"],
+});
+
+toiletData.push({
+    name: "New York",
+    address: "New York City",
+    lat: 55.798579,
     long: -122.396911,
     price: 0,
     rating: 1,
@@ -47,7 +60,20 @@ toiletData.push({
     availability: "Medium",
     amount: 1,
     pictures: ["http://www.freeiconspng.com/uploads/bathroom-restroom-toilet-icon-20.png", "http://i.imgur.com/aExxCQv.png?1"],
-})
+});
+
+toiletData.push({
+    name: "New York",
+    address: "New York City",
+    lat: 35.798579,
+    long: -122.396911,
+    price: 0,
+    rating: 1,
+    public: true,
+    availability: "Medium",
+    amount: 1,
+    pictures: ["http://www.freeiconspng.com/uploads/bathroom-restroom-toilet-icon-20.png", "http://i.imgur.com/aExxCQv.png?1"],
+});
 
 
 
