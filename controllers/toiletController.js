@@ -1,5 +1,17 @@
 const db = require('../models');
 
+var NodeGeocoder = require('node-geocoder');
+
+var options = {
+    provider: 'google',
+
+    // Optional depending on the providers
+    httpAdapter: 'https', // Default
+    apiKey: 'AIzaSyDtDkrXzXkujBCx8mAFT393o2A5L3Fg6qY', // for Mapquest, OpenCage, Google Premier
+    formatter: null         // 'gpx', 'string', ...
+};
+var geocoder = NodeGeocoder(options);
+
 function index(req, res) {
   db.Toilet.find({}, function(err, allToilets) {
     if (err) {
@@ -10,19 +22,46 @@ function index(req, res) {
 }
 
 function create(req, res) {
-  console.log(req.body);
-  db.Toilet.create({
-      name: req.body.name,
-      address: req.body.address,
-      price: req.body.price,
-      rating: req.body.rating,
-      public: req.body.public,
-      availability: req.body.availability,
-      amount: req.body.amount,
-      pictures: req.body.pictures,
-  });
-      // res.json(createdToilet);
-      res.sendStatus(200);
+
+    geocoder.geocode(req.body.address, function(err, response) {
+        db.Toilet.create({
+            name: req.body.name,
+            lat: response[0].latitude,
+            long: response[0].longitude,
+            address: response[0].formattedAddress,
+            price: req.body.price,
+            rating: req.body.rating,
+            public: req.body.public,
+            availability: req.body.availability,
+            amount: req.body.amount,
+            pictures: req.body.pictures,
+        }, function(err, createdToilet) {
+            res.send(createdToilet);
+        });
+    })
+      // db.Toilet.create({
+    //       name: req.body.name,
+    //       // lat: lat(req.body.address),
+    //       // long: long(req.body.address),
+    //       // address: address,
+    //       price: req.body.price,
+    //       rating: req.body.rating,
+    //       public: req.body.public,
+    //       availability: req.body.availability,
+    //       amount: req.body.amount,
+    //       pictures: req.body.pictures,
+    //   });
+    //   // }, function(err, toilet) {
+    //   //     if (err) {
+    //   //         console.log(err)
+    //   //     }
+    //   //     if (!toilet.pictures) {
+    //   //         toilet.pictures = "http://www.freeiconspng.com/uploads/bathroom-restroom-toilet-icon-20.png";
+    //   //     }
+    //   //     toilet.save();
+    //   // });
+    //
+    // res.sendStatus(200)
 
 }
 

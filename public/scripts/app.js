@@ -1,14 +1,21 @@
 $(document).ready(function () {
   $('select').material_select();
   $('.modal').modal();
-  initMap();
-
+    initMap();
   //grabs everything in the database and displays the content next to the map
   $.ajax({
     method: "GET",
     url: '/api/toilets',
-    success: renderToiletList,
-  });
+    success: function(data) {
+        data.forEach(function (returnData) {
+            console.log(returnData)
+            var marker = new google.maps.Marker({
+                position: {lat: returnData.lat, lng: returnData.long},
+                map: map,
+                title: "Hello World!",
+            });
+        })
+    }});
 
 
 //handles adding new toilets
@@ -31,7 +38,8 @@ $(document).ready(function () {
           success: function () {
               $.ajax({
                   method: "GET",
-                  url: '/api/toilets',
+                  url: '/api/toilets',            // address: res[0].formattedAddress,
+
                   success: renderToiletList,
               });
           }
@@ -81,6 +89,10 @@ $(document).ready(function () {
   // end of document ready
 })
 
+
+
+
+
 //handles toilet description/edit toggling
 function handleEditToggle() {
   let $thisToilet = $(this).closest('.toilet');
@@ -108,12 +120,26 @@ function handleDelete() {
 }
 
 //google map api
+let map;
 function initMap() {
-  let map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 10,
+
+  map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 3,
         center: new google.maps.LatLng(37.78, -122.44),
       });
 }
+//need to get markers onto map
+// function renderGoogleMarkers(data) {
+//     // console.log(data);
+//     data.forEach(function(returnData) {
+//         console.log(returnData)
+//         var marker = new google.maps.Marker({
+//             position: {lat: returnData.lat, lng: returnData.long},
+//             map: map,
+//             title:"Hello World!",
+//         });
+//     })
+// }
 
 //goes through each toilet in the database and inputs them into renderToilet
 function renderToiletList (list) {

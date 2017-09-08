@@ -26,7 +26,7 @@ let reviewList = [
 toiletData.push({
     name: "Pier 7",
     address: "7 The Embarcadero, San Francisco, CA 94105",
-    lat: 37.798579,
+    lat: 38.798579,
     long: -122.396911,
     price: 0,
     rating: 5,
@@ -37,9 +37,9 @@ toiletData.push({
 });
 
 toiletData.push({
-    name: "Pier 8",
-    address: "8 The Embarcadero, San Francisco, CA 94105",
-    lat: 37.798579,
+    name: "New York",
+    address: "New York City",
+    lat: 45.798579,
     long: -122.396911,
     price: 0,
     rating: 1,
