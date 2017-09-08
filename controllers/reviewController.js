@@ -1,6 +1,9 @@
 const db = require('../models');
 
 
+
+
+
 function index (req, res) {
   db.Review.find({}, function(err, allReviews) {
     if (err) {

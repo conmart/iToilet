@@ -3,9 +3,25 @@ $(document).ready(function () {
   $('.modal').modal();
     initMap();
   //grabs everything in the database and displays the content next to the map
+  let skip = 0;
+  let limit = 5;
+  let lengthOfToilets;
+
   $.ajax({
     method: "GET",
-    url: '/api/toilets',
+    url: '/api/allToilets',
+    success: function (length) {
+      console.log(length);
+      lengthOfToilets = length;
+      console.log('front end lengthOfToilets', lengthOfToilets);
+    }
+  })
+
+
+
+  $.ajax({
+    method: "GET",
+    url: '/api/toilets/',
     success: function(data) {
         renderToiletList(data);
         data.forEach(function (returnData) {
@@ -37,6 +53,7 @@ $(document).ready(function () {
           },
           success: function(data) {
               console.log("success");
+              lengthOfToilets++;
               renderToilet(data);
               //     console.log(returnData)
                   var marker = new google.maps.Marker({
@@ -51,7 +68,10 @@ $(document).ready(function () {
     //handles the toggling between toilet description and editing toilets
   $('.modal-bodies').on('click', '.edit-button', handleEditToggle);
 
-  $('.modal-bodies').on('click', '.delete-button', handleDelete);
+  $('.modal-bodies').on('click', '.delete-button', function() {
+      lengthOfToilets--;
+      handleDelete();
+    });
 
   $('.modal-bodies').on('click', '.review-button', handleReviewToggle);
   $('.modal-bodies').on('click', '.add-review-button', handleAddReview);
@@ -91,6 +111,59 @@ $(document).ready(function () {
   })
 
 
+  // Flips to next page of results
+  $('.next-button').on('click', function () {
+    // console.log('next click length', lengthOfToilets);
+    if (skip === 0) {
+      $('.previous-button').toggle();
+    }
+    skip += limit;
+    if (skip + limit >= lengthOfToilets) {
+      $('.next-button').toggle();
+    }
+    $.ajax({
+      method: "GET",
+      url: '/api/toilets/' + skip,
+      success: function(data) {
+          renderToiletList(data);
+          initMap();
+          data.forEach(function (returnData) {
+              var marker = new google.maps.Marker({
+                  position: {lat: returnData.lat, lng: returnData.long},
+                  map: map,
+                  title: returnData.name,
+              });
+          })
+      }
+    })
+  })
+
+  //Flips to previous page of results
+  $('.previous-button').on('click', function () {
+    // console.log('next click length', lengthOfToilets);
+    skip -= limit;
+    if (skip === 0) {
+      $('.previous-button').toggle();
+    }
+    if ($('.next-button').is(":hidden")) {
+      $('.next-button').toggle();
+    }
+    $.ajax({
+      method: "GET",
+      url: '/api/toilets/' + skip,
+      success: function(data) {
+          renderToiletList(data);
+          initMap();
+          data.forEach(function (returnData) {
+              var marker = new google.maps.Marker({
+                  position: {lat: returnData.lat, lng: returnData.long},
+                  map: map,
+                  title: returnData.name,
+              });
+          })
+      }
+    })
+  })
 
 
 
