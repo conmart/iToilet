@@ -9,11 +9,10 @@ $(document).ready(function () {
     success: function(data) {
         renderToiletList(data);
         data.forEach(function (returnData) {
-            console.log(returnData)
             var marker = new google.maps.Marker({
                 position: {lat: returnData.lat, lng: returnData.long},
                 map: map,
-                title: "Hello World!",
+                title: returnData.name,
             });
         })
     }});
@@ -36,13 +35,15 @@ $(document).ready(function () {
               amount: $('.add-amount').val(),
               pictures: $('.add-picture').val(),
           },
-          success: function () {
-              $.ajax({
-                  method: "GET",
-                  url: '/api/toilets',            // address: res[0].formattedAddress,
-
-                  success: renderToiletList,
-              });
+          success: function(data) {
+              console.log("success");
+              renderToilet(data);
+              //     console.log(returnData)
+                  var marker = new google.maps.Marker({
+                      position: {lat: data.lat, lng: data.long},
+                      map: map,
+                      title: data.name,
+                  });
           }
       });
       });
