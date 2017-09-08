@@ -122,12 +122,12 @@ function handleReviewToggle() {
 function handleAddReview() {
   let $thisToilet = $(this).closest('.toilet');
   let toiletId = $thisToilet.data('toilet-id');
-  console.log(toiletId);
+  // console.log(toiletId);
   let descriptionSelector = '#review-description-' + toiletId;
-  console.log('review description', $(descriptionSelector).val());
-  console.log('review rating', $thisToilet.find('.review-rating')[0].value);
+  // console.log('review description', $(descriptionSelector).val());
+  // console.log('review rating', $thisToilet.find('.review-rating')[0].value);
   let postURL = "api/reviews/" + toiletId;
-  console.log(postURL);
+  // console.log(postURL);
   $.ajax({
     method: "POST",
     url: postURL,
@@ -135,21 +135,19 @@ function handleAddReview() {
       rating: $thisToilet.find('.review-rating')[0].value,
       description: $(descriptionSelector).val()
     },
-    // success: handleUpdatedToilet
   })
   .then(function (updatedToilet) {
-    console.log('received toilet', updatedToilet);
+    // console.log('received toilet', updatedToilet);
     let modalClose = '#'+toiletId;
     $(modalClose).modal('close');
 
     let toiletModalTrigger = '.trigger-for-' + toiletId;
-
+    // Deletes modal body
     $('[data-toilet-id =' + toiletId + ']').remove();
+    // Deletes modal trigger
     $(toiletModalTrigger).remove();
 
     renderToilet(updatedToilet);
-
-    $('[data-toilet-id =' + toiletId + ']')[0].scrollIntoView();
   })
   .catch(function(err) {
     console.log('Ajax review post error', err);
@@ -187,7 +185,7 @@ function renderToilet (toilet) {
   let modalTrigger = `
     <li><a class="waves-effect waves-light modal-trigger modal-edit trigger-for-${toiletId}" href="#${toiletId}">${toilet.name} Toilet</a></li>
   `;
-  $('.list-toilets').append(modalTrigger);
+  $('.list-toilets').prepend(modalTrigger);
 
   let images = [];
 
