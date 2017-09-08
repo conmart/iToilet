@@ -51,6 +51,10 @@ $(document).ready(function () {
 
   $('.modal-bodies').on('click', '.delete-button', handleDelete);
 
+  $('.modal-bodies').on('click', '.review-button', handleReviewToggle);
+  $('.modal-bodies').on('click', '.add-review-button', handleAddReview);
+
+
   //handles the save functionality and also the toggling between toilet description/edit
   $(document).on("click", ".save-button", function() {
     let toiletId = $(this).closest('.toilet');
@@ -119,6 +123,55 @@ function handleDelete() {
 
 }
 
+// Handles showing review form
+function handleReviewToggle() {
+  let $thisToilet = $(this).closest('.toilet');
+  $thisToilet.find(".before-edit").toggle();
+  $thisToilet.find(".review-form").toggle();
+}
+
+//Handles submiting review form
+function handleAddReview() {
+  let $thisToilet = $(this).closest('.toilet');
+  let toiletId = $thisToilet.data('toilet-id');
+  // console.log(toiletId);
+  let descriptionSelector = '#review-description-' + toiletId;
+  // console.log('review description', $(descriptionSelector).val());
+  // console.log('review rating', $thisToilet.find('.review-rating')[0].value);
+  let postURL = "api/reviews/" + toiletId;
+  // console.log(postURL);
+  $.ajax({
+    method: "POST",
+    url: postURL,
+    data: {
+      rating: $thisToilet.find('.review-rating')[0].value,
+      description: $(descriptionSelector).val()
+    },
+  })
+  .then(function (updatedToilet) {
+    // console.log('received toilet', updatedToilet);
+    let modalClose = '#'+toiletId;
+    $(modalClose).modal('close');
+
+    let toiletModalTrigger = '.trigger-for-' + toiletId;
+    // Deletes modal body
+    $('[data-toilet-id =' + toiletId + ']').remove();
+    // Deletes modal trigger
+    $(toiletModalTrigger).remove();
+
+    renderToilet(updatedToilet);
+  })
+  .catch(function(err) {
+    console.log('Ajax review post error', err);
+  });
+
+}
+
+
+
+
+
+
 //google map api
 let map;
 function initMap() {
@@ -152,18 +205,49 @@ function renderToiletList (list) {
 
 //creates the structure of the modals description/save for the individual toilet
 function renderToilet (toilet) {
+  let toiletId = toilet._id;
+
+  //creates hompage triggers for corresponding toilet modals
   let modalTrigger = `
-    <li><a class="waves-effect waves-light modal-trigger modal-edit" href="#${toilet._id}">${toilet.name} Toilet</a></li>
+    <li><a class="waves-effect waves-light modal-trigger modal-edit trigger-for-${toiletId}" href="#${toiletId}">${toilet.name} Toilet</a></li>
   `;
-  $('.list-toilets').append(modalTrigger);
+  $('.list-toilets').prepend(modalTrigger);
 
   let images = [];
 
+  // Reviews default
+  let reviewsHTML = "No Reviews Yet :("
+
+  // Looks for reviews and adds them to their corresponding modals
+  $.ajax({
+    method: "GET",
+    url: '/api/reviews/' + toiletId
+  })
+  .then(function(receivedReviews) {
+    // console.log('Reviews that came back', receivedReviews);
+    if (receivedReviews.length > 0) {
+      let reviewsArray = []
+      receivedReviews.forEach(function (review) {
+        let format = `<li>${review.rating} Star Review: "${review.description}" - Posted: ${review.date}</li>`;
+        reviewsArray.push(format);
+      })
+      reviewsHTML = reviewsArray.join("");
+      // console.log('New Reviews HTML', reviewsHTML);
+      let $target = $('[data-toilet-id =' + toiletId + ']').find('.reviews-here');
+      $target.html(reviewsHTML);
+    }
+  })
+  .catch(function(err) {
+    console.log(err);
+  })
+
+
+
+  // Formats all the pictures tied to a toilet into an HTML-friendly block
   toilet.pictures.forEach(function (picture) {
     let imageHTML = `<img src="${picture}">`
     images.push(imageHTML);
   });
-
   let allImagesHTML = images.join("");
 
   let public = "Public";
@@ -193,14 +277,14 @@ function renderToilet (toilet) {
                       ${allImagesHTML}
                     </div>
                 </div>
-                  <ol>
-                    <li>Review 1</li>
-                    <li>Review 2</li>
+                  <ol class ="reviews-here">
+                    ${reviewsHTML}
                   </ol>
 
                 <div class="modal-footer">
                   <a class="waves-effect waves-light btn edit-button">Edit</a>
                   <a class="waves-effect waves-light btn delete-button">Delete</a>
+                  <a class="waves-effect waves-light btn review-button">Write Review</a>
                 </div>
                 </div>
 
@@ -268,10 +352,42 @@ function renderToilet (toilet) {
                 </div>
               </div>
               </form>
+
+              <!--End of edit form, beginning of review form-->
+
+              <form class="col s12 review-form">
+                <div class="row">
+                  <div class="col s6">
+                    <label edit-form>Rate the toilet</label>
+                    <select class="review-rating review-form">
+                      <option value="1">&#9733;</option>
+                      <option value="2">&#9733;&#9733;</option>
+                      <option value="3">&#9733;&#9733;&#9733;</option>
+                      <option value="4">&#9733;&#9733;&#9733;&#9733;</option>
+                      <option value="5">&#9733;&#9733;&#9733;&#9733;&#9733;</option>
+                    </select>
+
+                  </div>
+                  <div class="input-field col s6">
+                    <input id="review-description-${toiletId}" type="text" class="add-name">
+                    <label for="review-description-${toiletId}">Review</label>
+                  </div>
                 </div>
+
+                <div class="modal-footer">
+                  <a class="waves-effect waves-light btn add-review-button">Add Review</a>
+                </div>
+
+
+
+              </form>
+                </div>
+
+
+
 `
 
 
-    $('.modal-bodies').append(modalBody);
+    $('.modal-bodies').prepend(modalBody);
     $('.modal').modal();
 }

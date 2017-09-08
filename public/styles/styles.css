@@ -68,3 +68,7 @@ a {
 .delete-button {
   background-color: red;
 }
+
+.review-form {
+  display: none;
+}

@@ -11,9 +11,38 @@ function index (req, res) {
 }
 
 
+function which (req, res) {
+  // console.log('toilet ID passed to which function', req.params.toiletId);
+  db.Review.find({toilet: req.params.toiletId}, function(err, matchReviews) {
+    if (err) {
+      console.log('ERROR at which controller ', err);
+    }
+    // console.log("matched reviews", matchReviews);
+    res.json(matchReviews);
+  })
+}
+
+function create (req, res) {
+  // console.log('create review body', req.body);
+  // console.log('Id that will be searched', req.params.toiletId);
+  db.Toilet.findById(req.params.toiletId, function (err, foundToilet) {
+    if (err) {
+      console.log(err);
+    }
+    db.Review.create({
+      rating: req.body.rating,
+      description: req.body.description,
+      toilet: foundToilet,
+    });
+    res.json(foundToilet);
+  });
+
+}
 
 
 
 module.exports = {
   index: index,
+  which: which,
+  create: create,
 }
