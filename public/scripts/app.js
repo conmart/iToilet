@@ -299,7 +299,7 @@ function renderToilet (toilet) {
 
   //creates hompage triggers for corresponding toilet modals
   let modalTrigger = `
-    <li><a class="waves-effect waves-light modal-trigger modal-edit trigger-for-${toiletId}" href="#${toiletId}">${toilet.name} Toilet</a></li>
+    <li><a class="waves-effect waves-light modal-trigger modal-edit trigger-for-${toiletId}" href="#${toiletId}">${toilet.name} Toilet &#9733;</a></li>
   `;
   $('.list-toilets').prepend(modalTrigger);
 
