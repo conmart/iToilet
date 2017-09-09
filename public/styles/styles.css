@@ -35,7 +35,7 @@ a {
 
 .search-filters {
   background-color: yellow;
-  height: 100px;
+  height: 200px;
   width: 100%;
 }
 
@@ -85,4 +85,13 @@ h4 {
 
 .previous-button {
   display: none;
+}
+
+h5 {
+  padding-top: 25px;
+  padding-left: 25px;
+}
+
+.activate-filter {
+  padding-left: 185px;
 }
