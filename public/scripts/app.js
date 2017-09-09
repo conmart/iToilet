@@ -9,12 +9,9 @@ let ratingLimit = 1;
 $(document).ready(function () {
   $('select').material_select();
   $('.modal').modal();
-    initMap();
+    // initMap();
   //grabs everything in the database and displays the content next to the map
-  // let skip = 0;
-  // let limit = 5;
-  // let lengthOfToilets;
-  // let ratingLimit = 1;
+
 
   $.ajax({
     method: "GET",
@@ -27,19 +24,7 @@ $(document).ready(function () {
   })
 
 
-  $.ajax({
-    method: "GET",
-    url: '/api/toilets/' + skip + '/' + ratingLimit,
-    success: function(data) {
-        renderToiletList(data);
-        data.forEach(function (returnData) {
-            var marker = new google.maps.Marker({
-                position: {lat: returnData.lat, lng: returnData.long},
-                map: map,
-                title: returnData.name,
-            });
-        })
-    }});
+  renderPage();
 
 
 
@@ -140,21 +125,7 @@ $(document).ready(function () {
     if (skip + limit >= lengthOfToilets) {
       $('.next-button').toggle();
     }
-    $.ajax({
-      method: "GET",
-      url: '/api/toilets/' + skip,
-      success: function(data) {
-          renderToiletList(data);
-          initMap();
-          data.forEach(function (returnData) {
-              var marker = new google.maps.Marker({
-                  position: {lat: returnData.lat, lng: returnData.long},
-                  map: map,
-                  title: returnData.name,
-              });
-          })
-      }
-    })
+    renderPage();
   })
 
   //Flips to previous page of results
@@ -167,32 +138,12 @@ $(document).ready(function () {
     if ($('.next-button').is(":hidden")) {
       $('.next-button').toggle();
     }
-    $.ajax({
-      method: "GET",
-      url: '/api/toilets/' + skip,
-      success: function(data) {
-          renderToiletList(data);
-          initMap();
-          data.forEach(function (returnData) {
-              var marker = new google.maps.Marker({
-                  position: {lat: returnData.lat, lng: returnData.long},
-                  map: map,
-                  title: returnData.name,
-              });
-          })
-      }
-    })
+    renderPage();
   })
 
 
 
-  // $('.test-filter').on('click', function () {
-  //   $.ajax({
-  //     method: "GET",
-  //     url:
-  //     success: function(data) {
-  //   })
-  // })
+
 
   // end of document ready
 })
