@@ -23,9 +23,7 @@ app.get('/', function homepage(req, res) {
 });
 
 app.get('/api/allToilets', controllers.toilets.count);
-app.get('/api/toilets/:skip', controllers.toilets.nextPage)
-
-app.get('/api/toilets', controllers.toilets.index);
+app.get('/api/toilets/:skip/:ratingLimit', controllers.toilets.index);
 app.post('/api/toilets', controllers.toilets.create);
 app.put('/api/toilets/:id', controllers.toilets.update);
 

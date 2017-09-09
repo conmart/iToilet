@@ -12,39 +12,29 @@ var options = {
 };
 var geocoder = NodeGeocoder(options);
 
-// variables for results pages
-let skip = 0;
 let limit = 5;
-let lengthOfToilets;
+
 
 function count (req, res) {
   db.Toilet.find({}, function (err, allToilets) {
     if (err) {
       console.log('ERROR at count controller ', err);
     }
-    lengthOfToilets = allToilets.length;
+    let lengthOfToilets = allToilets.length;
     console.log('length of toilets', lengthOfToilets);
     res.json(lengthOfToilets);
   })
 }
 
-function nextPage(req, res) {
-  db.Toilet.find({}, function(err, nextToilets) {
-    if (err) {
-      console.log('ERROR at index controller ', err);
-    }
-    res.json(nextToilets)
-  }).limit(limit).skip(parseInt(req.params.skip))
 
-}
 
 function index(req, res) {
-  db.Toilet.find({}, function(err, allToilets) {
+  db.Toilet.find({rating: { $gte: parseInt(req.params.ratingLimit) }}, function(err, allToilets) {
     if (err) {
       console.log('ERROR at index controller ', err);
     }
     res.json(allToilets)
-  }).limit(limit);
+  }).limit(limit).skip(parseInt(req.params.skip));
 }
 
 function create(req, res) {
@@ -65,29 +55,7 @@ function create(req, res) {
             res.send(createdToilet);
         });
     })
-      // db.Toilet.create({
-    //       name: req.body.name,
-    //       // lat: lat(req.body.address),
-    //       // long: long(req.body.address),
-    //       // address: address,
-    //       price: req.body.price,
-    //       rating: req.body.rating,
-    //       public: req.body.public,
-    //       availability: req.body.availability,
-    //       amount: req.body.amount,
-    //       pictures: req.body.pictures,
-    //   });
-    //   // }, function(err, toilet) {
-    //   //     if (err) {
-    //   //         console.log(err)
-    //   //     }
-    //   //     if (!toilet.pictures) {
-    //   //         toilet.pictures = "http://www.freeiconspng.com/uploads/bathroom-restroom-toilet-icon-20.png";
-    //   //     }
-    //   //     toilet.save();
-    //   // });
-    //
-    // res.sendStatus(200)
+
 
 }
 
@@ -112,11 +80,14 @@ function destroy(req,res) {
   });
 }
 
+
+
+
 module.exports = {
   count: count,
   index: index,
   create: create,
   update: update,
   destroy: destroy,
-  nextPage: nextPage,
+
 }

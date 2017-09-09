@@ -1,11 +1,17 @@
+let skip = 0;
+let limit = 5;
+let lengthOfToilets;
+let ratingLimit = 1;
+
+
+
+
 $(document).ready(function () {
   $('select').material_select();
   $('.modal').modal();
-    initMap();
+    // initMap();
   //grabs everything in the database and displays the content next to the map
-  let skip = 0;
-  let limit = 5;
-  let lengthOfToilets;
+
 
   $.ajax({
     method: "GET",
@@ -18,20 +24,9 @@ $(document).ready(function () {
   })
 
 
+  renderPage();
 
-  $.ajax({
-    method: "GET",
-    url: '/api/toilets/',
-    success: function(data) {
-        renderToiletList(data);
-        data.forEach(function (returnData) {
-            var marker = new google.maps.Marker({
-                position: {lat: returnData.lat, lng: returnData.long},
-                map: map,
-                title: returnData.name,
-            });
-        })
-    }});
+
 
 
 //handles adding new toilets
@@ -111,6 +106,15 @@ $(document).ready(function () {
   })
 
 
+
+  $('.filter-toilets').on('submit', function(event) {
+    event.preventDefault();
+    // console.log('filtering for toilets with min rating of', $('.filter-rating')[1].value);
+    ratingLimit = $('.filter-rating')[1].value;
+    renderPage();
+
+  })
+
   // Flips to next page of results
   $('.next-button').on('click', function () {
     // console.log('next click length', lengthOfToilets);
@@ -121,21 +125,7 @@ $(document).ready(function () {
     if (skip + limit >= lengthOfToilets) {
       $('.next-button').toggle();
     }
-    $.ajax({
-      method: "GET",
-      url: '/api/toilets/' + skip,
-      success: function(data) {
-          renderToiletList(data);
-          initMap();
-          data.forEach(function (returnData) {
-              var marker = new google.maps.Marker({
-                  position: {lat: returnData.lat, lng: returnData.long},
-                  map: map,
-                  title: returnData.name,
-              });
-          })
-      }
-    })
+    renderPage();
   })
 
   //Flips to previous page of results
@@ -148,29 +138,34 @@ $(document).ready(function () {
     if ($('.next-button').is(":hidden")) {
       $('.next-button').toggle();
     }
-    $.ajax({
-      method: "GET",
-      url: '/api/toilets/' + skip,
-      success: function(data) {
-          renderToiletList(data);
-          initMap();
-          data.forEach(function (returnData) {
-              var marker = new google.maps.Marker({
-                  position: {lat: returnData.lat, lng: returnData.long},
-                  map: map,
-                  title: returnData.name,
-              });
-          })
-      }
-    })
+    renderPage();
   })
+
+
 
 
 
   // end of document ready
 })
-
-
+//TESTING THIS
+//Handles New Page Render
+function renderPage () {
+  $.ajax({
+    method: "GET",
+    url: '/api/toilets/' + skip + '/' + ratingLimit,
+    success: function(data) {
+        renderToiletList(data);
+        initMap();
+        data.forEach(function (returnData) {
+            var marker = new google.maps.Marker({
+                position: {lat: returnData.lat, lng: returnData.long},
+                map: map,
+                title: returnData.name,
+            });
+        })
+    }
+  })
+}
 
 
 
