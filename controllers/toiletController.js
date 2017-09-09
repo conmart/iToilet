@@ -13,16 +13,17 @@ var options = {
 var geocoder = NodeGeocoder(options);
 
 // variables for results pages
-let skip = 0;
+// let skip = 0;
 let limit = 5;
-let lengthOfToilets;
+// let lengthOfToilets;
+// let ratingLimit = 1;
 
 function count (req, res) {
   db.Toilet.find({}, function (err, allToilets) {
     if (err) {
       console.log('ERROR at count controller ', err);
     }
-    lengthOfToilets = allToilets.length;
+    let lengthOfToilets = allToilets.length;
     console.log('length of toilets', lengthOfToilets);
     res.json(lengthOfToilets);
   })
@@ -31,20 +32,22 @@ function count (req, res) {
 function nextPage(req, res) {
   db.Toilet.find({}, function(err, nextToilets) {
     if (err) {
-      console.log('ERROR at index controller ', err);
+      console.log('ERROR at nextPage controller ', err);
     }
     res.json(nextToilets)
   }).limit(limit).skip(parseInt(req.params.skip))
 
 }
 
+// rating: { $gte: 5 }
+
 function index(req, res) {
-  db.Toilet.find({}, function(err, allToilets) {
+  db.Toilet.find({rating: { $gte: parseInt(req.params.ratingLimit) }}, function(err, allToilets) {
     if (err) {
       console.log('ERROR at index controller ', err);
     }
     res.json(allToilets)
-  }).limit(limit);
+  }).limit(limit).skip(parseInt(req.params.skip));
 }
 
 function create(req, res) {
@@ -112,6 +115,19 @@ function destroy(req,res) {
   });
 }
 
+function filter (req, res) {
+  db.Toilet.find({
+    rating: { $gte: 5 },
+  },
+    function(err, results) {
+      if (err) {
+        console.log(err);
+      }
+      res.json(results)
+    })
+}
+
+
 module.exports = {
   count: count,
   index: index,
@@ -119,4 +135,5 @@ module.exports = {
   update: update,
   destroy: destroy,
   nextPage: nextPage,
+  filter: filter,
 }

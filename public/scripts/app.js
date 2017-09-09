@@ -1,11 +1,20 @@
+let skip = 0;
+let limit = 5;
+let lengthOfToilets;
+let ratingLimit = 1;
+
+
+
+
 $(document).ready(function () {
   $('select').material_select();
   $('.modal').modal();
     initMap();
   //grabs everything in the database and displays the content next to the map
-  let skip = 0;
-  let limit = 5;
-  let lengthOfToilets;
+  // let skip = 0;
+  // let limit = 5;
+  // let lengthOfToilets;
+  // let ratingLimit = 1;
 
   $.ajax({
     method: "GET",
@@ -18,10 +27,9 @@ $(document).ready(function () {
   })
 
 
-
   $.ajax({
     method: "GET",
-    url: '/api/toilets/',
+    url: '/api/toilets/' + skip + '/' + ratingLimit,
     success: function(data) {
         renderToiletList(data);
         data.forEach(function (returnData) {
@@ -32,6 +40,8 @@ $(document).ready(function () {
             });
         })
     }});
+
+
 
 
 //handles adding new toilets
@@ -111,6 +121,15 @@ $(document).ready(function () {
   })
 
 
+
+  $('.filter-toilets').on('submit', function(event) {
+    event.preventDefault();
+    // console.log('filtering for toilets with min rating of', $('.filter-rating')[1].value);
+    ratingLimit = $('.filter-rating')[1].value;
+    renderPage();
+
+  })
+
   // Flips to next page of results
   $('.next-button').on('click', function () {
     // console.log('next click length', lengthOfToilets);
@@ -167,10 +186,35 @@ $(document).ready(function () {
 
 
 
+  // $('.test-filter').on('click', function () {
+  //   $.ajax({
+  //     method: "GET",
+  //     url:
+  //     success: function(data) {
+  //   })
+  // })
+
   // end of document ready
 })
-
-
+//TESTING THIS
+//Handles New Page Render
+function renderPage () {
+  $.ajax({
+    method: "GET",
+    url: '/api/toilets/' + skip + '/' + ratingLimit,
+    success: function(data) {
+        renderToiletList(data);
+        initMap();
+        data.forEach(function (returnData) {
+            var marker = new google.maps.Marker({
+                position: {lat: returnData.lat, lng: returnData.long},
+                map: map,
+                title: returnData.name,
+            });
+        })
+    }
+  })
+}
 
 
 
