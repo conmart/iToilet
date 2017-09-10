@@ -75,7 +75,7 @@ function update(req,res) {
 }
 
 function destroy(req,res) {
-  db.Toilet.findByIdAndRemove({_id: req.params.id}, function(err, deletedToilet) {
+  db.Toilet.deleteOne({_id: req.params.id}, function(err, deletedToilet) {
     res.sendStatus(200);
   });
 }
