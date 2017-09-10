@@ -85,6 +85,7 @@ $(document).ready(function () {
             id: toiletId.data('toilet-id'),
             name: toiletId.find('.edit-name').val(),
             address: toiletId.find('.edit-address').val(),
+            availability: $("input[name=group1]:checked").val(),
             // rating: toiletId.find('.edit-rating')[1].value,
             price: toiletId.find('.edit-price').val(),
             public: toiletId.find('.edit-privacy').prop('checked'),
@@ -151,6 +152,13 @@ $(document).ready(function () {
   // end of document ready
 })
 
+function returnJSON() {
+    $.ajax({
+        method: 'GET',
+        url: '/api/toilets'
+    })
+}
+//TESTING THIS
 //Handles New Page Render
 function renderPage () {
   $.ajax({
@@ -359,7 +367,7 @@ function renderToilet (toilet) {
                         <li>Address: ${toilet.address}</li>
                         <li>${public}</li>
                         <li>Price: ${price}</li>
-                        <li>Availability: ${toilet.availabilty}</li>
+                        <li>Availability: ${toilet.availability}</li>
                         <li>Amount of Toilets: ${toilet.amount}</li>
                       </ul>
                     </div>
@@ -382,65 +390,53 @@ function renderToilet (toilet) {
 
                 <form class="col s12 new-toilet-form edit-form">
               <div class="row">
-                <div class="input-field col s6">
-                  <input type="text" class="edit-name" value="${toilet.name}">
-                  <label class="active" for="edit-name">Name</label>
-                </div>
-                <div class="input-field col s6">
-                  <input type="text" class="edit-address" value="${toilet.address}">
-                  <label class="active" for="edit-address">Address</label>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col s6">
-                  <label edit-form>Rate the toilet</label>
-                  <select class="edit-rating edit-form">
-                    <option value="1">&#9733;</option>
-                    <option value="2">&#9733;&#9733;</option>
-                    <option value="3">&#9733;&#9733;&#9733;</option>
-                    <option value="4">&#9733;&#9733;&#9733;&#9733;</option>
-                    <option value="5">&#9733;&#9733;&#9733;&#9733;&#9733;</option>
-                  </select>
+  <div class="input-field col s6">
+    <input type="text" class="edit-name" value="${toilet.name}">
+    <label class="active" for="edit-name">Name</label>
+  </div>
+  <div class="input-field col s6">
+    <input type="text" class="edit-address" value="${toilet.address}">
+    <label class="active" for="edit-address">Address</label>
+  </div>
+</div>
+<div class="row">
+  <div class="input-field col s6">
+    <input class="edit-price" type="number" value="${toilet.price}"}>
+    <label class="active" for="edit-price">Price</label>
+  </div>
 
-                </div>
-                <div class="input-field col s6">
-                  <input class="edit-price" type="number" value="${toilet.price}"}>
-                  <label class="active" for="edit-price">Price</label>
-                </div>
-              </div>
+  <div class="col s6">
+    <div class="switch">
+      <label>
+        Private
+        <input class="switch-id edit-privacy" type="checkbox" value="Private">
+        <span class="lever"></span>
+        Public
+      </label>
+    </div>
+  </div>
+</div>
 
-              <div class="row">
-                  <div class="col s6">
-                    <div class="switch">
-                      <label>
-                        Private
-                        <input class="switch-id edit-privacy" type="checkbox" value="Private">
-                        <span class="lever"></span>
-                        Public
-                      </label>
-                    </div>
-                  </div>
-                <div class="col s6 edit-radio-form">
-                      <label class="radio-buttons" for="edit-avail-1-${toilet._id}">Availability of Toilets</label>
-                      </br>
-                      <input id="edit-avail-1-${toilet._id}" class="with-gap edit-avail-1" name="group1" type="radio" value="low" />
-                      <label class="radio-buttons" for="edit-avail-1-${toilet._id}">Low</label>
-                      <input id="edit-avail-2-${toilet._id}" class="with-gap edit-avail-2" name="group1" type="radio" value="medium"/>
-                      <label class="radio-buttons" for="edit-avail-2-${toilet._id}">Medium</label>
-                      <input id="edit-avail-3-${toilet._id}" class="with-gap edit-avail-3" name="group1" type="radio" value="high"/>
-                      <label class="radio-buttons" for="edit-avail-3-${toilet._id}">High</label>
-                </div>
-                </div>
+<div class="row">
+  <div class="col s6 edit-radio-form">
+    <label class="radio-buttons" for="edit-avail-1-${toilet._id}">Availability of Toilets</label>
+    </br>
+    <input id="edit-avail-1-${toilet._id}" class="with-gap edit-avail-1" name="group1" type="radio" value="Low" />
+    <label class="radio-buttons" for="edit-avail-1-${toilet._id}">Low</label>
+    <input id="edit-avail-2-${toilet._id}" class="with-gap edit-avail-2" name="group1" type="radio" value="Medium"/>
+    <label class="radio-buttons" for="edit-avail-2-${toilet._id}">Medium</label>
+    <input id="edit-avail-3-${toilet._id}" class="with-gap edit-avail-3" name="group1" type="radio" value="High"/>
+    <label class="radio-buttons" for="edit-avail-3-${toilet._id}">High</label>
+  </div>
 
-                <div class="row">
-                <div class="input-field col s6">
-                  <input class="edit-amount" type="number" value="${toilet.amount}">
-                  <label class="active" for="edit-amount">Number of Toilets</label>
-                </div>
-                <div class="modal-footer">
-                  <a class="waves-effect waves-light btn save-button">Save</a>
-                </div>
-              </div>
+  <div class="input-field col s6">
+    <input class="edit-amount" type="number" value="${toilet.amount}">
+    <label class="active" for="edit-amount">Number of Toilets</label>
+  </div>
+  <div class="modal-footer">
+    <a class="waves-effect waves-light btn save-button">Save</a>
+  </div>
+</div>
               </form>
 
               <!--End of edit form, beginning of review form-->

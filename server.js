@@ -26,6 +26,7 @@ app.get('/api/allToilets', controllers.toilets.count);
 app.get('/api/toilets/:skip/:ratingLimit/:scope', controllers.toilets.index);
 app.post('/api/toilets', controllers.toilets.create);
 app.put('/api/toilets/:id', controllers.toilets.update);
+app.get('/api/toilets', controllers.toilets.toiletJSON)
 
 app.delete('/api/toilets/:id', controllers.toilets.destroy);
 
