@@ -74,7 +74,7 @@ function update(req,res) {
         toilet.address = req.body.address;
         toilet.price = req.body.price;
         toilet.public = req.body.public;
-        toilet.rating = averageRating,
+        toilet.rating = Math.round(averageRating),
         toilet.amount = req.body.amount;
         toilet.save();
         res.sendStatus(200);

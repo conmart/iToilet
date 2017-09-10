@@ -51,7 +51,7 @@ function create (req, res) {
         console.log(req.params.toiletId);
         db.Toilet.findByIdAndUpdate(req.params.toiletId, {new:true}, (err, foundToiletRating) => {
           console.log(foundToiletRating)
-          foundToiletRating.rating = sumToiletRating/toiletLength;
+          foundToiletRating.rating = Math.round(sumToiletRating/toiletLength);
           foundToiletRating.save();
         })
   })
