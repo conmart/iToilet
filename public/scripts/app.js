@@ -103,9 +103,9 @@ $(document).ready(function () {
     event.preventDefault();
     // console.log('filtering for toilets with min rating of', $('.filter-rating')[1].value);
     ratingLimit = $('.filter-rating')[1].value;
-    console.log('toilet scope', $('.filter-toilet-scope')[1].value);
+    // console.log('toilet scope', $('.filter-toilet-scope')[1].value);
     let scopeResult = $('.filter-toilet-scope')[1].value;
-    console.log('scope result is', scopeResult);
+    // console.log('scope result is', scopeResult);
     if (scopeResult == 1) {
       scope = 0;
     } else if (scopeResult == 2) {
@@ -113,7 +113,7 @@ $(document).ready(function () {
     } else if (scopeResult == 3) {
       scope = false;
     }
-    console.log('scope is now', scope);
+    // console.log('scope is now', scope);
     renderPage();
 
   })
@@ -314,9 +314,12 @@ function renderToilet (toilet) {
       let reviewsArray = []
       //Formats reviews as HTML
       receivedReviews.forEach(function (review) {
+        let shortenedDate = review.date.substring(0, 10);
+        let reviewStars = buildStars(review.rating);
+        console.log(reviewStars);
         let format = `<li class="review" data-review-id="${review._id}">
-          <h4>${review.rating} Star Review: "${review.description}" - Posted: ${review.date}</h4>
-          <button class="delete-review">Delete Review</button>
+          <h4>${reviewStars} <br> "${review.description}" </h4><p> Posted: ${shortenedDate}</p>
+          <button class="delete-review">X</button>
           </li>`;
         reviewsArray.push(format);
       })
@@ -477,4 +480,13 @@ function renderToilet (toilet) {
 
     $('.modal-bodies').prepend(modalBody);
     $('.modal').modal();
+}
+
+
+function buildStars (num) {
+  if (num <= 1) {
+    return '&#9733;'
+  } else {
+    return ('&#9733;' + buildStars(num -1));
+  }
 }

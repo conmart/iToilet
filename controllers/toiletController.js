@@ -29,7 +29,7 @@ function count (req, res) {
 
 
 function index(req, res) {
-  console.log(req.params.scope);
+  // console.log(req.params.scope);
   if (req.params.scope == 0) {
     db.Toilet.find({rating: { $gte: parseInt(req.params.ratingLimit) }}, function(err, allToilets) {
       if (err) {
