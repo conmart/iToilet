@@ -48,11 +48,12 @@ function create (req, res) {
           toiletLength += 1;
           sumToiletRating += eachToilet.rating
         })
-        console.log(req.params.toiletId);
         db.Toilet.findByIdAndUpdate(req.params.toiletId, {new:true}, (err, foundToiletRating) => {
-          console.log(foundToiletRating)
+            console.log(sumToiletRating);
+            console.log(toiletLength);
           foundToiletRating.rating = Math.round(sumToiletRating/toiletLength);
           foundToiletRating.save();
+          console.log(foundToiletRating)
         })
   })
 

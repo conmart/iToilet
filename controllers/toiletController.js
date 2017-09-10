@@ -82,13 +82,13 @@ function update(req,res) {
             toiletLength += 1;
             toiletRatingSum += sumToiletRating.rating
     })
-    if (toiletLength === 0) {
-            averageRating = 3;
-    }
-    else {
-        averageRating = toiletRatingSum / toiletLength;
-    }
     db.Toilet.findByIdAndUpdate(req.body.id, {new:true}, (err, toilet) => {
+        if (toiletLength === 0) {
+            averageRating = toilet.rating;
+        }
+        else {
+            averageRating = toiletRatingSum / toiletLength;
+        }
         toilet.name = req.body.name;
         toilet.address = req.body.address;
         toilet.price = req.body.price;
