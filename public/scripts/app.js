@@ -150,7 +150,7 @@ $(document).ready(function () {
 
   // end of document ready
 })
-//TESTING THIS
+
 //Handles New Page Render
 function renderPage () {
   $.ajax({
@@ -262,7 +262,7 @@ let map;
 function initMap() {
 
   map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 3,
+        zoom: 12,
         center: new google.maps.LatLng(37.78, -122.44),
       });
 }
