@@ -60,24 +60,42 @@ function create(req, res) {
 }
 
 function update(req,res) {
-  db.Toilet.findByIdAndUpdate(req.body.id, {new:true}, (err, toilet) => {
-    console.log(req.body);
-    toilet.name = req.body.name;
-    toilet.address = req.body.address;
-    toilet.price = req.body.price;
-    toilet.public = req.body.public;
-        // toilet.rating = req.body.rating,
-    toilet.amount = req.body.amount;
-    toilet.save();
-    res.sendStatus(200);
+    let toiletRatingSum = 0;
+    let toiletLength = 0;
+    let averageRating = 0;
+    db.Review.find({toilet: req.body.id}, (err, toiletRating) => {
+        toiletRating.forEach(function(sumToiletRating) {
+            toiletLength += 1;
+            toiletRatingSum += sumToiletRating.rating
+    })
+    averageRating = toiletRatingSum/toiletLength
+    db.Toilet.findByIdAndUpdate(req.body.id, {new:true}, (err, toilet) => {
+        toilet.name = req.body.name;
+        toilet.address = req.body.address;
+        toilet.price = req.body.price;
+        toilet.public = req.body.public;
+        toilet.rating = averageRating,
+        toilet.amount = req.body.amount;
+        toilet.save();
+        res.sendStatus(200);
 
-  })
+    })
+        //try finding toilet from here and updating the rating from within this review find
+        console.log(toiletRatingSum/toiletLength)
+    });
 }
 
 function destroy(req,res) {
   db.Toilet.deleteOne({_id: req.params.id}, function(err, deletedToilet) {
     res.sendStatus(200);
   });
+}
+
+function toiletJSON(req, res) {
+    db.Review.findById()
+    db.Toilet.find({}, function(err, data) {
+        res.json(data);
+    })
 }
 
 
@@ -89,5 +107,6 @@ module.exports = {
   create: create,
   update: update,
   destroy: destroy,
+  toiletJSON: toiletJSON,
 
 }

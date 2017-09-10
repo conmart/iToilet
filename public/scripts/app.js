@@ -139,6 +139,13 @@ $(document).ready(function () {
 
   // end of document ready
 })
+
+function returnJSON() {
+    $.ajax({
+        method: 'GET',
+        url: '/api/toilets'
+    })
+}
 //TESTING THIS
 //Handles New Page Render
 function renderPage () {
