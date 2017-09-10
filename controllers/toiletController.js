@@ -76,13 +76,18 @@ function update(req,res) {
     console.log(req.body.availability);
     let toiletRatingSum = 0;
     let toiletLength = 0;
-    let averageRating = 0;
+    let averageRating;
     db.Review.find({toilet: req.body.id}, (err, toiletRating) => {
         toiletRating.forEach(function(sumToiletRating) {
             toiletLength += 1;
             toiletRatingSum += sumToiletRating.rating
     })
-    averageRating = toiletRatingSum/toiletLength
+    if (toiletLength === 0) {
+            averageRating = 3;
+    }
+    else {
+        averageRating = toiletRatingSum / toiletLength;
+    }
     db.Toilet.findByIdAndUpdate(req.body.id, {new:true}, (err, toilet) => {
         toilet.name = req.body.name;
         toilet.address = req.body.address;

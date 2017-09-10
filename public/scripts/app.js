@@ -421,11 +421,11 @@ function renderToilet (toilet) {
   <div class="col s6 edit-radio-form">
     <label class="radio-buttons" for="edit-avail-1-${toilet._id}">Availability of Toilets</label>
     </br>
-    <input id="edit-avail-1-${toilet._id}" class="with-gap edit-avail-1" name="group1" type="radio" value="low" />
+    <input id="edit-avail-1-${toilet._id}" class="with-gap edit-avail-1" name="group1" type="radio" value="Low" />
     <label class="radio-buttons" for="edit-avail-1-${toilet._id}">Low</label>
-    <input id="edit-avail-2-${toilet._id}" class="with-gap edit-avail-2" name="group1" type="radio" value="medium"/>
+    <input id="edit-avail-2-${toilet._id}" class="with-gap edit-avail-2" name="group1" type="radio" value="Medium"/>
     <label class="radio-buttons" for="edit-avail-2-${toilet._id}">Medium</label>
-    <input id="edit-avail-3-${toilet._id}" class="with-gap edit-avail-3" name="group1" type="radio" value="high"/>
+    <input id="edit-avail-3-${toilet._id}" class="with-gap edit-avail-3" name="group1" type="radio" value="High"/>
     <label class="radio-buttons" for="edit-avail-3-${toilet._id}">High</label>
   </div>
 
