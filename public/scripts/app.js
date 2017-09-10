@@ -114,7 +114,7 @@ $(document).ready(function () {
       scope = false;
     }
     console.log('scope is now', scope);
-    // renderPage();
+    renderPage();
 
   })
 
