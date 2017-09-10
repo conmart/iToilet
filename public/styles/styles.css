@@ -81,6 +81,8 @@ h4 {
 .delete-review {
   margin: 10px;
   margin-top: -25px;
+  background-color: red;
+  color: white;
 }
 
 .previous-button {
@@ -93,5 +95,5 @@ h5 {
 }
 
 .activate-filter {
-  padding-left: 185px;
+  margin-left: 185px;
 }
