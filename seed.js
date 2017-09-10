@@ -15,9 +15,24 @@ let reviewList = [
   },
   {
     rating: 4,
-    description: "decent toilet.",
+    description: "Decent toilet.",
     toiletName: "Pier 7",
-  }
+  },
+  {
+    rating: 4,
+    description: "Good toilet.",
+    toiletName: "Twin Peaks",
+  },
+  {
+    rating: 1,
+    description: "This toilet is awful.",
+    toiletName: "Drumm & Clay",
+  },
+  {
+    rating: 2,
+    description: "Meh.",
+    toiletName: "UN Plaza",
+  },
 ];
 
 
