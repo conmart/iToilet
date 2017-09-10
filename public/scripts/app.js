@@ -2,7 +2,7 @@ let skip = 0;
 let limit = 5;
 let lengthOfToilets;
 let ratingLimit = 1;
-let onlyPublic = true;
+let scope = 0;
 
 
 
@@ -103,7 +103,18 @@ $(document).ready(function () {
     event.preventDefault();
     // console.log('filtering for toilets with min rating of', $('.filter-rating')[1].value);
     ratingLimit = $('.filter-rating')[1].value;
-    renderPage();
+    console.log('toilet scope', $('.filter-toilet-scope')[1].value);
+    let scopeResult = $('.filter-toilet-scope')[1].value;
+    console.log('scope result is', scopeResult);
+    if (scopeResult == 1) {
+      scope = 0;
+    } else if (scopeResult == 2) {
+      scope = true;
+    } else if (scopeResult == 3) {
+      scope = false;
+    }
+    console.log('scope is now', scope);
+    // renderPage();
 
   })
 
@@ -144,7 +155,7 @@ $(document).ready(function () {
 function renderPage () {
   $.ajax({
     method: "GET",
-    url: '/api/toilets/' + skip + '/' + ratingLimit,
+    url: `/api/toilets/${skip}/${ratingLimit}/${scope}`,
     success: function(data) {
         renderToiletList(data);
         initMap();

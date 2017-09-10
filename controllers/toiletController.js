@@ -29,16 +29,29 @@ function count (req, res) {
 
 
 function index(req, res) {
-  db.Toilet.find({rating: { $gte: parseInt(req.params.ratingLimit) }}, function(err, allToilets) {
-    if (err) {
-      console.log('ERROR at index controller ', err);
-    }
-    res.json(allToilets)
-  }).limit(limit).skip(parseInt(req.params.skip));
+  console.log(req.params.scope);
+  if (req.params.scope == 0) {
+    db.Toilet.find({rating: { $gte: parseInt(req.params.ratingLimit) }}, function(err, allToilets) {
+      if (err) {
+        console.log('ERROR at index controller ', err);
+      }
+      res.json(allToilets)
+    }).limit(limit).skip(parseInt(req.params.skip));
+  } else {
+    db.Toilet.find({rating: { $gte: parseInt(req.params.ratingLimit) }, public: req.params.scope }, function(err, allToilets) {
+      if (err) {
+        console.log('ERROR at index controller ', err);
+      }
+      res.json(allToilets)
+    }).limit(limit).skip(parseInt(req.params.skip));
+  }
+
 }
 
-function create(req, res) {
 
+
+
+function create(req, res) {
     geocoder.geocode(req.body.address, function(err, response) {
         db.Toilet.create({
             name: req.body.name,
@@ -55,9 +68,9 @@ function create(req, res) {
             res.send(createdToilet);
         });
     })
-
-
 }
+
+
 
 function update(req,res) {
   db.Toilet.findByIdAndUpdate(req.body.id, {new:true}, (err, toilet) => {
@@ -73,6 +86,8 @@ function update(req,res) {
 
   })
 }
+
+
 
 function destroy(req,res) {
   db.Toilet.deleteOne({_id: req.params.id}, function(err, deletedToilet) {
