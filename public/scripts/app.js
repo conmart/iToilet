@@ -2,6 +2,7 @@ let skip = 0;
 let limit = 5;
 let lengthOfToilets;
 let ratingLimit = 1;
+let onlyPublic = true;
 
 
 
