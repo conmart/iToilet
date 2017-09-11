@@ -40,102 +40,90 @@
       </div>
 
       <div class="add-toilet center-align">
-        <!-- Modal Trigger -->
-        <a class="waves-effect waves-light btn modal-trigger center-align" href="#modal1">Add New Toilet</a>
+        <!-- Add toilet button -->
+        <a class="waves-effect waves-light btn modal-trigger center-align create-toilet" href="#modal1">Add New Toilet</a>
 
-        <!-- Modal Structure -->
+        <!-- Start of add toilet form -->
         <form class="col s12 new-toilet-form">
-        <div id="modal1" class="modal">
-          <div class="modal-content row">
-              <div class="row">
-                <div class="input-field col s6">
-                  <input id="name" type="text" class="add-name">
-                  <label for="name">Name</label>
+          <div id="modal1" class="modal">
+            <div class="modal-content row">
+                <div class="row">
+                  <div class="input-field col s6">
+                    <input id="name" type="text" class="add-name">
+                    <label for="name">Name</label>
+                  </div>
+                  <div class="input-field col s6">
+                    <input id="address" type="text" class="add-address">
+                    <label for="address">Address</label>
+                  </div>
                 </div>
-                <div class="input-field col s6">
-                  <input id="address" type="text" class="add-address">
-                  <label for="address">Address</label>
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="input-field col s6">
-                  <select class="add-rating">
-                    <!--<option value="" disabled selected>Rate the toilet</option>-->
-                    <option value="1">&#9733;</option>
-                    <option value="2">&#9733;&#9733;</option>
-                    <option value="3">&#9733;&#9733;&#9733;</option>
-                    <option value="4">&#9733;&#9733;&#9733;&#9733;</option>
-                    <option value="5">&#9733;&#9733;&#9733;&#9733;&#9733;</option>
-                  </select>
-                  <label>Rate the toilet</label>
-                </div>
-                <div class="input-field col s6">
-                  <input id="price" type="number" class="add-price">
-                  <label for="price">Price</label>
-                </div>
-              </div>
 
                 <div class="row">
-                  <div class="col s6">
-                    <div class="switch">
-                      <label>
-                        Private
-                        <input id="switch-id" type="checkbox" value="Private">
-                        <span class="lever"></span>
-                        Public
-                      </label>
-                    </div>
+                  <div class="input-field col s6">
+                    <select class="add-rating">
+                      <!--<option value="" disabled selected>Rate the toilet</option>-->
+                      <option value="1">&#9733;</option>
+                      <option value="2">&#9733;&#9733;</option>
+                      <option value="3">&#9733;&#9733;&#9733;</option>
+                      <option value="4">&#9733;&#9733;&#9733;&#9733;</option>
+                      <option value="5">&#9733;&#9733;&#9733;&#9733;&#9733;</option>
+                    </select>
+                    <label>Rate the toilet</label>
                   </div>
-                <div class="col s6">
-                  <!--<div class="radio-buttons">-->
-                      <input class="with-gap" name="group1" type="radio" value="low" id="test1" />
-                      <label class="radio-buttons" for="test1">Low</label>
-                      <input class="with-gap" name="group1" type="radio" value="medium" id="test2" />
-                      <label class="radio-buttons" for="test2">Medium</label>
-                      <input class="with-gap" name="group1" type="radio" value="high" id="test3"  />
-                      <label class="radio-buttons" for="test3">High</label>
-                  <!--</div>-->
-                </div>
+                  <div class="input-field col s6">
+                    <input id="price" type="number" class="add-price">
+                    <label for="price">Price</label>
+                  </div>
                 </div>
 
-              <div class="row">
-                <div class="input-field col s6">
-                  <input id="amount" type="number" class="add-amount">
-                  <label for="amount">Number of Toilets</label>
-                </div>
-                <div class="col s6 input-field">
-                  <input id="picture-url" type="text" class="add-picture">
-                  <label for="picture-url">Picture URL</label>
-                </div>
-                    <!--<div class="btn">-->
-                      <!--<span>File</span>-->
-                      <!--<input class="picture-upload" type="file" multiple>-->
+                  <div class="row">
+                    <div class="col s6">
+                      <div class="switch">
+                        <label>
+                          Private
+                          <input id="switch-id" type="checkbox" value="Private">
+                          <span class="lever"></span>
+                          Public
+                        </label>
+                      </div>
+                    </div>
+                  <div class="col s6">
+                    <!--<div class="radio-buttons">-->
+                        <input class="with-gap" name="group1" type="radio" value="low" id="test1" />
+                        <label class="radio-buttons" for="test1">Low</label>
+                        <input class="with-gap" name="group1" type="radio" value="medium" id="test2" />
+                        <label class="radio-buttons" for="test2">Medium</label>
+                        <input class="with-gap" name="group1" type="radio" value="high" id="test3"  />
+                        <label class="radio-buttons" for="test3">High</label>
                     <!--</div>-->
-                    <!--<div class="file-path-wrapper">-->
-                      <!--<input class="file-path validate" type="text" placeholder="Upload one or more files">-->
-                    <!--</div>-->
-                  <!--</div>-->
+                  </div>
+                  </div>
 
-              </div>
-              <!--<input type="text" class="add-price" placeholder="name">-->
-
-
-
+                <div class="row">
+                  <div class="input-field col s6">
+                    <input id="amount" type="number" class="add-amount">
+                    <label for="amount">Number of Toilets</label>
+                  </div>
+                  <div class="col s6 input-field">
+                    <input id="picture-url" type="text" class="add-picture">
+                    <label for="picture-url">Picture URL</label>
+                  </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="submit-toilet modal-action modal-close waves-effect waves-green btn-flat">Add Toilet</button>
+            </div>
           </div>
-          <div class="modal-footer">
-            <button type="submit" class="submit-toilet modal-action modal-close waves-effect waves-green btn-flat">Add Toilet</button>
-          </div>
-        </div>
+          <!-- End of add toilet form -->
         </form>
-
       </div>
 
+      <!-- Start of serach filters section -->
       <div class="search-filters">
-        <h5>Filter Toilets</h5>
+        <h5 class="center-align">Filter Toilets</h5>
           <form class="filter-toilets">
             <div class ="row">
-              <div class="input-field col s3">
+              <div class="input-field col s3 offset-s2">
                 <select class="filter-rating">
                   <option value="1">All Toilets</option>
                   <option value="2">2 Stars or More</option>
@@ -145,7 +133,7 @@
                 </select>
                 <label>Toilet Rating</label>
               </div>
-              <div class="input-field col s3">
+              <div class="input-field col s3 offset-s2">
                 <select class="filter-toilet-scope">
                   <option value="1">All Toilets</option>
                   <option value="2">Public Toilets Only</option>
@@ -155,72 +143,45 @@
               </div>
             </div>
 
-            <button type="submit" class="activate-filter waves-effect waves-green btn-flat">Filter Results</button>
+            <div class="center-align">
+              <button type="submit" class="activate-filter waves-effect waves-green btn-flat">Filter Results</button>
+            </div>
+
           </form>
-
       </div>
-
+      <!-- End of serach filters section -->
 
 
 
         <div class="row">
-
           <div class="col s7 map-display">
             <div id="map">
+              <!-- Google map shows here -->
             </div>
           </div>
           <div class="col s5">
-
             <div id="info">
               <h3>Toilets in the area</h3>
               <ul class="list-toilets">
-                <!-- Modal Trigger -->
-                <!--<li><a class="waves-effect waves-light modal-trigger" href="#modal2">Pier 7 Toilet Hardcoded</a></li>-->
+                <!-- List of toilets for the page renders here -->
               </ul>
-
               <!-- Page Buttons -->
-              <button class="previous-button">Previous</button>
-              <button class="next-button">Next</button>
-
+              <button class="btn previous-button">Previous</button>
+              <button class="btn next-button">Next</button>
             </div>
-
-
-
-
             <div class="modal-bodies">
+              <!-- Bodies of modals added here from app.js -->
             </div>
-
-
-
-
-
           </div>
-
         </div>
-
-
 
 
 
       <footer>
         <div class="center-align">
-          <p>contact and footer info</p>
+          <p class="foot"><a href="https://www.youtube.com/watch?v=Pci_7o6cCbM">Our inspiration behind the app</a></p>
         </div>
       </footer>
 
-
-
   </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-

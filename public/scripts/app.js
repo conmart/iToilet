@@ -274,18 +274,7 @@ function initMap() {
         center: new google.maps.LatLng(37.78, -122.44),
       });
 }
-//need to get markers onto map
-// function renderGoogleMarkers(data) {
-//     // console.log(data);
-//     data.forEach(function(returnData) {
-//         console.log(returnData)
-//         var marker = new google.maps.Marker({
-//             position: {lat: returnData.lat, lng: returnData.long},
-//             map: map,
-//             title:"Hello World!",
-//         });
-//     })
-// }
+
 
 //goes through each toilet in the database and inputs them into renderToilet
 function renderToiletList (list) {
@@ -301,8 +290,9 @@ function renderToilet (toilet) {
   let toiletId = toilet._id;
 
   //creates hompage triggers for corresponding toilet modals
+  let overallRating = buildStars(toilet.rating);
   let modalTrigger = `
-    <li><a class="waves-effect waves-light modal-trigger modal-edit trigger-for-${toiletId}" href="#${toiletId}">${toilet.name} Toilet</a></li>
+    <li><a class="waves-effect waves-light modal-trigger modal-edit trigger-for-${toiletId}" href="#${toiletId}">${toilet.name} Toilet - ${overallRating}</a></li>
   `;
   $('.list-toilets').prepend(modalTrigger);
 
@@ -317,22 +307,19 @@ function renderToilet (toilet) {
     url: '/api/reviews/' + toiletId
   })
   .then(function(receivedReviews) {
-    // console.log('Reviews that came back', receivedReviews);
     if (receivedReviews.length > 0) {
       let reviewsArray = []
       //Formats reviews as HTML
       receivedReviews.forEach(function (review) {
         let shortenedDate = review.date.substring(0, 10);
         let reviewStars = buildStars(review.rating);
-        console.log(reviewStars);
         let format = `<li class="review" data-review-id="${review._id}">
-          <h4>${reviewStars} <br> "${review.description}" </h4><p> Posted: ${shortenedDate}</p>
+          <h5>${reviewStars} <br> "${review.description}" </h5><p> Posted: ${shortenedDate}</p>
           <button class="delete-review">X</button>
           </li>`;
         reviewsArray.push(format);
       })
       reviewsHTML = reviewsArray.join("");
-      // console.log('New Reviews HTML', reviewsHTML);
       let $target = $('[data-toilet-id =' + toiletId + ']').find('.reviews-here');
       $target.html(reviewsHTML);
     }
@@ -360,10 +347,10 @@ function renderToilet (toilet) {
               <div id="${toilet._id}" class="modal toilet" data-toilet-id="${toilet._id}">
                 <div class="modal-content before-edit">
                   <div class="row">
-                    <div class="toilet-info col s5">
+                    <div class="toilet-info col s7">
                       <h4>${toilet.name} Toilet</h4>
                       <ul>
-                        <li>Rating: ${toilet.rating}</li>
+                        <li>Rating: ${overallRating}</li>
                         <li>Address: ${toilet.address}</li>
                         <li>${public}</li>
                         <li>Price: ${price}</li>
@@ -371,7 +358,7 @@ function renderToilet (toilet) {
                         <li>Amount of Toilets: ${toilet.amount}</li>
                       </ul>
                     </div>
-                    <div class="toilet-pics col s4">
+                    <div class="toilet-pics col s3">
                       ${allImagesHTML}
                     </div>
                 </div>
