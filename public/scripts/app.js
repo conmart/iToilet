@@ -3,6 +3,7 @@ let limit = 5;
 let lengthOfToilets;
 let ratingLimit = 1;
 let scope = 0;
+let resultsSize = 0;
 
 
 
@@ -11,20 +12,9 @@ $(document).ready(function () {
   $('select').material_select();
   $('.modal').modal();
 
-  $.ajax({
-    method: "GET",
-    url: '/api/allToilets',
-    success: function (length) {
-      console.log(length);
-      lengthOfToilets = length;
-      console.log('front end lengthOfToilets', lengthOfToilets);
-    }
-  })
-
+  countToilets();
 
   renderPage();
-
-
 
 
 //handles adding new toilets
@@ -108,7 +98,11 @@ $(document).ready(function () {
     } else if (scopeResult == 3) {
       scope = false;
     }
+    skip = 0;
+    countToilets();
     renderPage();
+    $('.previous-button').hide();
+    $('.next-button').show();
 
   })
 
@@ -121,6 +115,8 @@ $(document).ready(function () {
     if (skip + limit >= lengthOfToilets) {
       $('.next-button').toggle();
     }
+    console.log('toilet length', lengthOfToilets);
+    console.log('skip', skip);
     renderPage();
   })
 
@@ -147,6 +143,21 @@ function returnJSON() {
         url: '/api/toilets'
     })
 }
+
+//counts total number of toilets in database given search criteria
+function countToilets() {
+  $.ajax({
+    method: "GET",
+    url: `/api/allToilets/${ratingLimit}/${scope}`,
+    success: function (length) {
+      console.log(length);
+      lengthOfToilets = length.length;
+      console.log('front end lengthOfToilets', lengthOfToilets);
+    }
+  })
+}
+
+
 
 //Handles New Page Render
 function renderPage () {
