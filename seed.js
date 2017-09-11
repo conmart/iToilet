@@ -36,7 +36,31 @@ let reviewList = [
 ];
 
 
+toiletData.push({
+    name: "General Assembly",
+    address: "225 Bush Street, San Francisco, CA 94104",
+    lat: 37.790841,
+    long: -122.401280,
+    price: 15000,
+    rating: 5,
+    public: false,
+    availability: "Medium",
+    amount: 2,
+    pictures: ["http://www.freeiconspng.com/uploads/bathroom-restroom-toilet-icon-20.png", "http://i.imgur.com/aExxCQv.png?1"],
+});
 
+toiletData.push({
+    name: "TransAmerica Pyramid",
+    address: "600 Montgomery Street, San Francisco, CA 94111",
+    lat: 37.7952,
+    long: -122.4028,
+    price: 5,
+    rating: 5,
+    public: false,
+    availability: "High",
+    amount: 6,
+    pictures: ["http://www.freeiconspng.com/uploads/bathroom-restroom-toilet-icon-20.png", "http://i.imgur.com/aExxCQv.png?1"],
+});
 
 toiletData.push({
     name: "Pier 7",
@@ -216,44 +240,7 @@ toiletData.push({
     amount: 1,
     pictures: ["http://www.freeiconspng.com/uploads/bathroom-restroom-toilet-icon-20.png"],
 });
-toiletData.push({
-    name: "New York",
-    address: "New York City",
-    lat: 45.798579,
-    long: 74.0059,
-    price: 0,
-    rating: 1,
-    public: true,
-    availability: "Medium",
-    amount: 1,
-    pictures: ["http://www.freeiconspng.com/uploads/bathroom-restroom-toilet-icon-20.png", "http://i.imgur.com/aExxCQv.png?1"],
-});
 
-toiletData.push({
-    name: "Seattle",
-    address: "New York City",
-    lat: 55.798579,
-    long: -122.396911,
-    price: 0,
-    rating: 1,
-    public: true,
-    availability: "Medium",
-    amount: 1,
-    pictures: ["http://www.freeiconspng.com/uploads/bathroom-restroom-toilet-icon-20.png", "http://i.imgur.com/aExxCQv.png?1"],
-});
-
-toiletData.push({
-    name: "Los Angeles",
-    address: "New York City",
-    lat: 35.798579,
-    long: -122.396911,
-    price: 0,
-    rating: 1,
-    public: true,
-    availability: "Medium",
-    amount: 1,
-    pictures: ["http://www.freeiconspng.com/uploads/bathroom-restroom-toilet-icon-20.png", "http://i.imgur.com/aExxCQv.png?1"],
-});
 
 
 
