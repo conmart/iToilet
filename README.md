@@ -4,7 +4,7 @@ Inspired by Seinfeld iToilet is an app that allows you to find the best public r
 
 iToilet also allows for users to add new public toilets as well as their own private toilets if they would like to make a bit of side cash off some desperate strangers.
 
-Find the app deployed on Heroku here: https://pure-lake-31539.herokuapp.com/
+[Find the app deployed on Heroku](https://pure-lake-31539.herokuapp.com/)
 
 # Technologies Used
 
@@ -24,7 +24,7 @@ Find the app deployed on Heroku here: https://pure-lake-31539.herokuapp.com/
 
 # Existing Features
 
-- The user can see all the toilets in our database displayed visually on a responsive map thanks to inegration with Google Maps API.
+- The user can see all the toilets in our database displayed visually on a responsive map thanks to integration with Google Maps API.
 - The user can also filter these results by the rating of the toilets and whether they are public or private.
 - Users can read reviews of toilets left by other users and add their own toilets and reviews to our database.
 - Users can also edit the toilets in the database if they notice that some information may be wrong about one of the toilets

@@ -26,12 +26,14 @@ app.get('/api/allToilets/:ratingLimit/:scope', controllers.toilets.count);
 app.get('/api/toilets/:skip/:ratingLimit/:scope', controllers.toilets.index);
 app.post('/api/toilets', controllers.toilets.create);
 app.put('/api/toilets/:id', controllers.toilets.update);
-app.get('/api/toilets', controllers.toilets.toiletJSON)
+app.get('/api/toilets', controllers.toilets.toiletJSON);
+// app.get('/api/toilets/:id', controllers.toilets.singleToilet);
 
 app.delete('/api/toilets/:id', controllers.toilets.destroy);
 
 app.get('/api/reviews', controllers.reviews.index);
 app.get('/api/reviews/:toiletId', controllers.reviews.which);
+// app.get('/api/toilets/:toiledId/reviews')
 app.post('/api/reviews/:toiletId', controllers.reviews.create);
 app.delete('/api/reviews/:reviewId', controllers.reviews.destroy);
 

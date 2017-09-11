@@ -149,6 +149,7 @@ function renderPage () {
     method: "GET",
     url: `/api/toilets/${skip}/${ratingLimit}/${scope}`,
     success: function(data) {
+
         resultsLength = data.length;
         if ((resultsLength < limit) || (resultsLength + skip == lengthOfToilets)) {
           $('.next-button').hide();
@@ -160,6 +161,7 @@ function renderPage () {
         } else {
           $('.previous-button').show();
         }
+
         renderToiletList(data);
         initMap();
         data.forEach(function (returnData) {
@@ -229,6 +231,15 @@ function handleAddReview() {
     // Deletes modal trigger
     $(toiletModalTrigger).remove();
 
+    // $.ajax({
+    //     method: "GET",
+    //     url: '/api/toilet/',
+    //     success: function(data) {
+    //         renderToilet(data);
+    //     }
+    //
+    // })
+
     renderToilet(updatedToilet);
   })
   .catch(function(err) {
@@ -239,6 +250,8 @@ function handleAddReview() {
 function handleDeleteReview () {
   let $thisReview = $(this).closest('.review');
   let reviewId = $thisReview.data('review-id');
+  let toiletId = $(this).closest('.toilet');
+  let toiletIdValue = toiletId.data('toilet-id');
   $.ajax({
     method: "DELETE",
     url: "/api/reviews/" + reviewId,

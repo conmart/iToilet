@@ -131,12 +131,15 @@ function destroy(req,res) {
 }
 
 function toiletJSON(req, res) {
-    db.Review.findById()
+    console.log(req);
     db.Toilet.find({}, function(err, data) {
         res.json(data);
     })
 }
 
+function singleToilet(req, res) {
+    res.json(req.body);
+}
 
 
 
@@ -147,5 +150,6 @@ module.exports = {
   update: update,
   destroy: destroy,
   toiletJSON: toiletJSON,
+  singleToilet: singleToilet,
 
 }
