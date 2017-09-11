@@ -108,27 +108,13 @@ $(document).ready(function () {
 
   // Flips to next page of results
   $('.next-button').on('click', function () {
-    // if (skip === 0) {
-    //   $('.previous-button').toggle();
-    // }
     skip += limit;
-    // if (skip + limit >= lengthOfToilets) {
-    //   $('.next-button').toggle();
-    // }
-    console.log('toilet length', lengthOfToilets);
-    console.log('skip', skip);
     renderPage();
   })
 
   //Flips to previous page of results
   $('.previous-button').on('click', function () {
     skip -= limit;
-    // if (skip === 0) {
-    //   $('.previous-button').toggle();
-    // }
-    // if ($('.next-button').is(":hidden")) {
-    //   $('.next-button').toggle();
-    // }
     renderPage();
   })
 
@@ -150,9 +136,7 @@ function countToilets() {
     method: "GET",
     url: `/api/allToilets/${ratingLimit}/${scope}`,
     success: function (length) {
-      console.log(length);
       lengthOfToilets = length.length;
-      console.log('front end lengthOfToilets', lengthOfToilets);
     }
   })
 }
@@ -166,7 +150,6 @@ function renderPage () {
     url: `/api/toilets/${skip}/${ratingLimit}/${scope}`,
     success: function(data) {
         resultsLength = data.length;
-        console.log('lenght of results', resultsLength);
         if ((resultsLength < limit) || (resultsLength + skip == lengthOfToilets)) {
           $('.next-button').hide();
         } else {
