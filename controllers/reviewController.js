@@ -63,7 +63,20 @@ function create (req, res) {
 
 
 function destroy (req, res) {
+    let sumRatings = 0;
+    let ratingLength = 0;
   db.Review.findByIdAndRemove({_id: req.params.reviewId}, function(err, deletedReview) {
+      db.Review.find({toilet: deletedReview.toilet}, function(err, foundReviews) {
+          foundReviews.forEach(function(each) {
+            sumRatings += each.rating;
+            ratingLength += 1;
+          })
+      db.Toilet.findById(deletedReview.toilet, function(err, foundToilet) {
+          console.log(Math.round(sumRatings/ratingLength));
+          foundToilet.rating = sumRatings/ratingLength;
+          foundToilet.save();
+      })
+      })
     res.sendStatus(200);
   });
 }

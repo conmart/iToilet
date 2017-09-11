@@ -257,7 +257,9 @@ function handleDeleteReview () {
     url: "/api/reviews/" + reviewId,
     success: function() {
       $('[data-review-id =' + reviewId + ']').remove();
-
+        renderPage();
+        let modalClose = '#'+toiletId.data('toilet-id');
+        $(modalClose).modal('close');
     }
   })
 
