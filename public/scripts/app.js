@@ -15,14 +15,7 @@ $(document).ready(function () {
   });
   $('.modal').modal();
 
-
-  countToilets();
-
   renderPage();
-
-  // $('#modal1').on('hidden.bs.modal', function () {
-  //     $(this).find('form').trigger('reset');
-  // })
 
 //handles adding new toilets
   $('.new-toilet-form').on('submit', function(event) {
@@ -100,8 +93,9 @@ $(document).ready(function () {
       scope = false;
     }
     skip = 0;
-    countToilets();
+
     renderPage();
+
     $('.previous-button').hide();
     $('.next-button').show();
 
@@ -146,6 +140,7 @@ function countToilets() {
 
 //Handles New Page Render
 function renderPage () {
+  countToilets();
   $.ajax({
     method: "GET",
     url: `/api/toilets/${skip}/${ratingLimit}/${scope}`,
@@ -231,15 +226,6 @@ function handleAddReview() {
     $('[data-toilet-id =' + toiletId + ']').remove();
     // Deletes modal trigger
     $(toiletModalTrigger).remove();
-
-    // $.ajax({
-    //     method: "GET",
-    //     url: '/api/toilet/',
-    //     success: function(data) {
-    //         renderToilet(data);
-    //     }
-    //
-    // })
 
     renderToilet(updatedToilet);
   })
