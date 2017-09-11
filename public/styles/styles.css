@@ -110,6 +110,11 @@ li {
 
 .foot {
   padding: 15px;
+  margin: 0;
+}
+
+.above-footer {
+  margin-bottom: 0;
 }
 
 #map{
