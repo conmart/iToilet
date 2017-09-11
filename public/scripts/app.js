@@ -3,7 +3,7 @@ let limit = 5;
 let lengthOfToilets;
 let ratingLimit = 1;
 let scope = 0;
-let resultsSize = 0;
+let resultsLength = 0;
 
 
 
@@ -108,13 +108,13 @@ $(document).ready(function () {
 
   // Flips to next page of results
   $('.next-button').on('click', function () {
-    if (skip === 0) {
-      $('.previous-button').toggle();
-    }
+    // if (skip === 0) {
+    //   $('.previous-button').toggle();
+    // }
     skip += limit;
-    if (skip + limit >= lengthOfToilets) {
-      $('.next-button').toggle();
-    }
+    // if (skip + limit >= lengthOfToilets) {
+    //   $('.next-button').toggle();
+    // }
     console.log('toilet length', lengthOfToilets);
     console.log('skip', skip);
     renderPage();
@@ -123,12 +123,12 @@ $(document).ready(function () {
   //Flips to previous page of results
   $('.previous-button').on('click', function () {
     skip -= limit;
-    if (skip === 0) {
-      $('.previous-button').toggle();
-    }
-    if ($('.next-button').is(":hidden")) {
-      $('.next-button').toggle();
-    }
+    // if (skip === 0) {
+    //   $('.previous-button').toggle();
+    // }
+    // if ($('.next-button').is(":hidden")) {
+    //   $('.next-button').toggle();
+    // }
     renderPage();
   })
 
@@ -165,6 +165,18 @@ function renderPage () {
     method: "GET",
     url: `/api/toilets/${skip}/${ratingLimit}/${scope}`,
     success: function(data) {
+        resultsLength = data.length;
+        console.log('lenght of results', resultsLength);
+        if ((resultsLength < limit) || (resultsLength + skip == lengthOfToilets)) {
+          $('.next-button').hide();
+        } else {
+          $('.next-button').show();
+        }
+        if (skip == 0) {
+          $('.previous-button').hide();
+        } else {
+          $('.previous-button').show();
+        }
         renderToiletList(data);
         initMap();
         data.forEach(function (returnData) {
