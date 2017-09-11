@@ -10,9 +10,6 @@ let scope = 0;
 $(document).ready(function () {
   $('select').material_select();
   $('.modal').modal();
-    // initMap();
-  //grabs everything in the database and displays the content next to the map
-
 
   $.ajax({
     method: "GET",
@@ -102,11 +99,8 @@ $(document).ready(function () {
 
   $('.filter-toilets').on('submit', function(event) {
     event.preventDefault();
-    // console.log('filtering for toilets with min rating of', $('.filter-rating')[1].value);
     ratingLimit = $('.filter-rating')[1].value;
-    // console.log('toilet scope', $('.filter-toilet-scope')[1].value);
     let scopeResult = $('.filter-toilet-scope')[1].value;
-    // console.log('scope result is', scopeResult);
     if (scopeResult == 1) {
       scope = 0;
     } else if (scopeResult == 2) {
@@ -114,14 +108,12 @@ $(document).ready(function () {
     } else if (scopeResult == 3) {
       scope = false;
     }
-    // console.log('scope is now', scope);
     renderPage();
 
   })
 
   // Flips to next page of results
   $('.next-button').on('click', function () {
-    // console.log('next click length', lengthOfToilets);
     if (skip === 0) {
       $('.previous-button').toggle();
     }
@@ -134,7 +126,6 @@ $(document).ready(function () {
 
   //Flips to previous page of results
   $('.previous-button').on('click', function () {
-    // console.log('next click length', lengthOfToilets);
     skip -= limit;
     if (skip === 0) {
       $('.previous-button').toggle();
@@ -146,11 +137,9 @@ $(document).ready(function () {
   })
 
 
-
-
-
   // end of document ready
 })
+
 
 function returnJSON() {
     $.ajax({
@@ -158,7 +147,7 @@ function returnJSON() {
         url: '/api/toilets'
     })
 }
-//TESTING THIS
+
 //Handles New Page Render
 function renderPage () {
   $.ajax({
@@ -214,12 +203,8 @@ function handleReviewToggle() {
 function handleAddReview() {
   let $thisToilet = $(this).closest('.toilet');
   let toiletId = $thisToilet.data('toilet-id');
-  // console.log(toiletId);
   let descriptionSelector = '#review-description-' + toiletId;
-  // console.log('review description', $(descriptionSelector).val());
-  // console.log('review rating', $thisToilet.find('.review-rating')[0].value);
   let postURL = "api/reviews/" + toiletId;
-  // console.log(postURL);
   $.ajax({
     method: "POST",
     url: postURL,
@@ -229,7 +214,6 @@ function handleAddReview() {
     },
   })
   .then(function (updatedToilet) {
-    // console.log('received toilet', updatedToilet);
     let modalClose = '#'+toiletId;
     $(modalClose).modal('close');
 
@@ -253,7 +237,6 @@ function handleDeleteReview () {
     method: "DELETE",
     url: "/api/reviews/" + reviewId,
     success: function() {
-      // console.log("Delete review success");
       $('[data-review-id =' + reviewId + ']').remove();
 
     }
@@ -465,7 +448,7 @@ function renderToilet (toilet) {
     $('.modal').modal();
 }
 
-
+//Switches rating number to visual star display
 function buildStars (num) {
   if (num <= 1) {
     return '&#9733;'
