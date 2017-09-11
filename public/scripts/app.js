@@ -10,12 +10,19 @@ let resultsLength = 0;
 
 $(document).ready(function () {
   $('select').material_select();
+  $('#modal1').modal({
+    complete: function() { $(this).find('form').reset(); }
+  });
   $('.modal').modal();
+
 
   countToilets();
 
   renderPage();
 
+  // $('#modal1').on('hidden.bs.modal', function () {
+  //     $(this).find('form').trigger('reset');
+  // })
 
 //handles adding new toilets
   $('.new-toilet-form').on('submit', function(event) {
@@ -34,18 +41,12 @@ $(document).ready(function () {
               amount: $('.add-amount').val(),
               pictures: $('.add-picture').val(),
           },
-          success: function(data) {
-              console.log("success");
-              lengthOfToilets++;
-              renderToilet(data);
-              //     console.log(returnData)
-                  var marker = new google.maps.Marker({
-                      position: {lat: data.lat, lng: data.long},
-                      map: map,
-                      title: data.name,
-                  });
+          success: function() {
+            $('#create-toilet-form').trigger('reset');
+
+            renderPage();
           }
-      });
+        })
       });
 
     //handles the toggling between toilet description and editing toilets
