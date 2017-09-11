@@ -223,7 +223,16 @@ function handleAddReview() {
     // Deletes modal trigger
     $(toiletModalTrigger).remove();
 
-    renderToilet(updatedToilet);
+    $.ajax({
+        method: "GET",
+        url: '/api/toilet/',
+        success: function(data) {
+            renderToilet(data);
+        }
+
+    })
+
+    // renderToilet(updatedToilet);
   })
   .catch(function(err) {
     console.log('Ajax review post error', err);
