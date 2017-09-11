@@ -3,36 +3,36 @@ const db = require('./models');
 let toiletData = [];
 
 let reviewList = [
-  {
-    rating: 5,
-    description: "Best toilet ever!",
-    toiletName: "Pier 8",
-  },
-  {
-    rating: 3,
-    description: "It was okay I guess.",
-    toiletName: "Pier 7",
-  },
-  {
-    rating: 4,
-    description: "Decent toilet.",
-    toiletName: "Pier 7",
-  },
-  {
-    rating: 4,
-    description: "Good toilet.",
-    toiletName: "Twin Peaks",
-  },
-  {
-    rating: 1,
-    description: "This toilet is awful.",
-    toiletName: "Drumm & Clay",
-  },
-  {
-    rating: 2,
-    description: "Meh.",
-    toiletName: "UN Plaza",
-  },
+  // {
+  //   rating: 5,
+  //   description: "Best toilet ever!",
+  //   toiletName: "Pier 8",
+  // },
+  // {
+  //   rating: 3,
+  //   description: "It was okay I guess.",
+  //   toiletName: "Pier 7",
+  // },
+  // {
+  //   rating: 4,
+  //   description: "Decent toilet.",
+  //   toiletName: "Pier 7",
+  // },
+  // {
+  //   rating: 4,
+  //   description: "Good toilet.",
+  //   toiletName: "Twin Peaks",
+  // },
+  // {
+  //   rating: 1,
+  //   description: "This toilet is awful.",
+  //   toiletName: "Drumm & Clay",
+  // },
+  // {
+  //   rating: 2,
+  //   description: "Meh.",
+  //   toiletName: "UN Plaza",
+  // },
 ];
 
 

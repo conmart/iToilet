@@ -154,6 +154,7 @@ function renderPage () {
     method: "GET",
     url: `/api/toilets/${skip}/${ratingLimit}/${scope}`,
     success: function(data) {
+        console.log(data);
         renderToiletList(data);
         initMap();
         data.forEach(function (returnData) {
@@ -223,16 +224,16 @@ function handleAddReview() {
     // Deletes modal trigger
     $(toiletModalTrigger).remove();
 
-    $.ajax({
-        method: "GET",
-        url: '/api/toilet/',
-        success: function(data) {
-            renderToilet(data);
-        }
+    // $.ajax({
+    //     method: "GET",
+    //     url: '/api/toilet/',
+    //     success: function(data) {
+    //         renderToilet(data);
+    //     }
+    //
+    // })
 
-    })
-
-    // renderToilet(updatedToilet);
+    renderToilet(updatedToilet);
   })
   .catch(function(err) {
     console.log('Ajax review post error', err);
@@ -242,6 +243,8 @@ function handleAddReview() {
 function handleDeleteReview () {
   let $thisReview = $(this).closest('.review');
   let reviewId = $thisReview.data('review-id');
+  let toiletId = $(this).closest('.toilet');
+  let toiletIdValue = toiletId.data('toilet-id');
   $.ajax({
     method: "DELETE",
     url: "/api/reviews/" + reviewId,

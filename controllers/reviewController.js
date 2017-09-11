@@ -37,25 +37,27 @@ function create (req, res) {
       rating: req.body.rating,
       description: req.body.description,
       toilet: foundToilet,
+    }, function(createdReview) {
+        db.Review.find({toilet: req.params.toiletId}, (err, foundToiletAgain) => {
+            if (err) {
+                console.log(err);
+            }
+            foundToiletAgain.forEach(function(eachToilet) {
+                toiletLength += 1;
+                sumToiletRating += eachToilet.rating
+                console.log('each toilet rating is ', eachToilet.rating)
+            })
+            db.Toilet.findByIdAndUpdate(req.params.toiletId, {new:true}, (err, foundToiletRating) => {
+                console.log(sumToiletRating);
+                // console.log(toiletLength);
+                foundToiletRating.rating = Math.round(sumToiletRating/toiletLength);
+                foundToiletRating.save();
+                res.json(foundToiletRating);
+            })
+        })
     });
-    res.json(foundToilet);
+    // res.json(foundToilet);
   });
-    db.Review.find({toilet: req.params.toiletId}, (err, foundToiletAgain) => {
-        if (err) {
-            console.log(err);
-        }
-        foundToiletAgain.forEach(function(eachToilet) {
-          toiletLength += 1;
-          sumToiletRating += eachToilet.rating
-        })
-        db.Toilet.findByIdAndUpdate(req.params.toiletId, {new:true}, (err, foundToiletRating) => {
-            console.log(sumToiletRating);
-            console.log(toiletLength);
-          foundToiletRating.rating = Math.round(sumToiletRating/toiletLength);
-          foundToiletRating.save();
-          console.log(foundToiletRating)
-        })
-  })
 
   }
 
