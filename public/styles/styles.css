@@ -121,3 +121,11 @@ li {
   height: 450px;
   width: 100%;
 }
+
+#availability-label {
+  font-size: 14px;
+}
+
+#create-switch {
+  margin-top: 24px;
+}
