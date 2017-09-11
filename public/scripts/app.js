@@ -3,6 +3,7 @@ let limit = 5;
 let lengthOfToilets;
 let ratingLimit = 1;
 let scope = 0;
+let resultsLength = 0;
 
 
 
@@ -11,20 +12,9 @@ $(document).ready(function () {
   $('select').material_select();
   $('.modal').modal();
 
-  $.ajax({
-    method: "GET",
-    url: '/api/allToilets',
-    success: function (length) {
-      console.log(length);
-      lengthOfToilets = length;
-      console.log('front end lengthOfToilets', lengthOfToilets);
-    }
-  })
-
+  countToilets();
 
   renderPage();
-
-
 
 
 //handles adding new toilets
@@ -108,31 +98,23 @@ $(document).ready(function () {
     } else if (scopeResult == 3) {
       scope = false;
     }
+    skip = 0;
+    countToilets();
     renderPage();
+    $('.previous-button').hide();
+    $('.next-button').show();
 
   })
 
   // Flips to next page of results
   $('.next-button').on('click', function () {
-    if (skip === 0) {
-      $('.previous-button').toggle();
-    }
     skip += limit;
-    if (skip + limit >= lengthOfToilets) {
-      $('.next-button').toggle();
-    }
     renderPage();
   })
 
   //Flips to previous page of results
   $('.previous-button').on('click', function () {
     skip -= limit;
-    if (skip === 0) {
-      $('.previous-button').toggle();
-    }
-    if ($('.next-button').is(":hidden")) {
-      $('.next-button').toggle();
-    }
     renderPage();
   })
 
@@ -148,13 +130,38 @@ function returnJSON() {
     })
 }
 
+//counts total number of toilets in database given search criteria
+function countToilets() {
+  $.ajax({
+    method: "GET",
+    url: `/api/allToilets/${ratingLimit}/${scope}`,
+    success: function (length) {
+      lengthOfToilets = length.length;
+    }
+  })
+}
+
+
+
 //Handles New Page Render
 function renderPage () {
   $.ajax({
     method: "GET",
     url: `/api/toilets/${skip}/${ratingLimit}/${scope}`,
     success: function(data) {
-        console.log(data);
+
+        resultsLength = data.length;
+        if ((resultsLength < limit) || (resultsLength + skip == lengthOfToilets)) {
+          $('.next-button').hide();
+        } else {
+          $('.next-button').show();
+        }
+        if (skip == 0) {
+          $('.previous-button').hide();
+        } else {
+          $('.previous-button').show();
+        }
+
         renderToiletList(data);
         initMap();
         data.forEach(function (returnData) {

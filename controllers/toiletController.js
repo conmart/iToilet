@@ -16,14 +16,31 @@ let limit = 5;
 
 
 function count (req, res) {
-  db.Toilet.find({}, function (err, allToilets) {
-    if (err) {
-      console.log('ERROR at count controller ', err);
-    }
-    let lengthOfToilets = allToilets.length;
-    console.log('length of toilets', lengthOfToilets);
-    res.json(lengthOfToilets);
-  })
+  // db.Toilet.find({}, function (err, allToilets) {
+  //   if (err) {
+  //     console.log('ERROR at count controller ', err);
+  //   }
+  //   let lengthOfToilets = allToilets.length;
+  //   console.log('length of toilets', lengthOfToilets);
+  //   res.json(lengthOfToilets);
+  // })
+
+  if (req.params.scope == 0) {
+    db.Toilet.find({rating: { $gte: parseInt(req.params.ratingLimit) }}, function(err, allToilets) {
+      if (err) {
+        console.log('ERROR at count controller ', err);
+      }
+      res.json(allToilets)
+    });
+  } else {
+    db.Toilet.find({rating: { $gte: parseInt(req.params.ratingLimit) }, public: req.params.scope }, function(err, allToilets) {
+      if (err) {
+        console.log('ERROR at count controller ', err);
+      }
+      res.json(allToilets)
+    });
+  }
+
 }
 
 
