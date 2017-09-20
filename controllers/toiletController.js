@@ -14,59 +14,11 @@ var geocoder = NodeGeocoder(options);
 
 let limit = 5;
 
+// This controller's index & count methods should be DRY'd up.
+// Just have one endpoint ("index") and pass it QUERY params like skip, limit, scope, ratingLimit
+// URL in server.js should look like api/toilets?limit=5&ratingLimit=3&skip=5&scope=1
 
-function count (req, res) {
-  // db.Toilet.find({}, function (err, allToilets) {
-  //   if (err) {
-  //     console.log('ERROR at count controller ', err);
-  //   }
-  //   let lengthOfToilets = allToilets.length;
-  //   console.log('length of toilets', lengthOfToilets);
-  //   res.json(lengthOfToilets);
-  // })
-
-  if (req.params.scope == 0) {
-    db.Toilet.find({rating: { $gte: parseInt(req.params.ratingLimit) }}, function(err, allToilets) {
-      if (err) {
-        console.log('ERROR at count controller ', err);
-      }
-      res.json(allToilets)
-    });
-  } else {
-    db.Toilet.find({rating: { $gte: parseInt(req.params.ratingLimit) }, public: req.params.scope }, function(err, allToilets) {
-      if (err) {
-        console.log('ERROR at count controller ', err);
-      }
-      res.json(allToilets)
-    });
-  }
-
-}
-
-
-
-function index(req, res) {
-  // console.log(req.params.scope);
-  if (req.params.scope == 0) {
-    db.Toilet.find({rating: { $gte: parseInt(req.params.ratingLimit) }}, function(err, allToilets) {
-      if (err) {
-        console.log('ERROR at index controller ', err);
-      }
-      res.json(allToilets)
-    }).limit(limit).skip(parseInt(req.params.skip));
-  } else {
-    db.Toilet.find({rating: { $gte: parseInt(req.params.ratingLimit) }, public: req.params.scope }, function(err, allToilets) {
-      if (err) {
-        console.log('ERROR at index controller ', err);
-      }
-      res.json(allToilets)
-    }).limit(limit).skip(parseInt(req.params.skip));
-  }
-
-}
-
-
-
+// In your one index method, access each query parameter using req.query.skip, req.query.limit, etc. 
 
 function create(req, res) {
     geocoder.geocode(req.body.address, function(err, response) {
@@ -149,7 +101,6 @@ module.exports = {
   create: create,
   update: update,
   destroy: destroy,
-  toiletJSON: toiletJSON,
   singleToilet: singleToilet,
 
 }
