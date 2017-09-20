@@ -1,20 +1,9 @@
 const db = require('../models');
 
+// index never used
 
-
-
-
+// this is the true index route for reviews
 function index (req, res) {
-  db.Review.find({}, function(err, allReviews) {
-    if (err) {
-      console.log('ERROR at index controller ', err);
-    }
-    res.json(allReviews);
-  })
-}
-
-
-function which (req, res) {
   // console.log('toilet ID passed to which function', req.params.toiletId);
   db.Review.find({toilet: req.params.toiletId}, function(err, matchReviews) {
     if (err) {
@@ -84,7 +73,6 @@ function destroy (req, res) {
 
 module.exports = {
   index: index,
-  which: which,
   create: create,
   destroy: destroy
 }
